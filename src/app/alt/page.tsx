@@ -1,4 +1,4 @@
-import { Hero } from "@/components/sections/hero";
+import { HeroAlt } from "@/components/sections/hero-alt";
 import { Updates } from "@/components/sections/updates";
 import { Philosophy } from "@/components/sections/philosophy";
 import { Courses } from "@/components/sections/courses";
@@ -9,10 +9,14 @@ import { Message } from "@/components/sections/message";
 import { Access } from "@/components/sections/access";
 import { Contact } from "@/components/sections/contact";
 
-export default function Home() {
+/**
+ * FV 別案。FV 以外のセクションはトップ（/）と共通です。
+ * 比較しながら決めるためのページなので、公開前にどちらかへ寄せてください。
+ */
+export default function AltHome() {
   return (
     <>
-      <Hero />
+      <HeroAlt />
       <Updates />
       <Philosophy />
       <Courses />

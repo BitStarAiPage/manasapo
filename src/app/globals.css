@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ブランドカラー（DESIGN.md 準拠） */
+  --color-sun: #ffd84d; /* メイン：サンフラワーイエロー */
+  --color-sun-soft: #ffe98f; /* 淡い黄色。面の重なりや区切りに */
+  --color-sun-deep: #f2c118; /* 手書き風あしらい・ホバー */
+  --color-ivory: #fffdf5; /* ベース：アイボリー */
+  --color-ink: #202020; /* 文字・黒背景：チャコール */
+  --color-ink-soft: #4b4a45; /* 補助テキスト */
+  --color-mint: #dff1e7; /* サブ：淡いミント */
+  --color-mint-deep: #b7dcc8; /* ミント面の罫線 */
+  --color-orange: #f2a900; /* 切り抜きの縁取り。黄色地でも沈まない濃さの同系色 */
+
+  --font-sans: var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* 固定ヘッダー分だけページ内リンクの着地位置を下げる */
+    scroll-padding-top: 5.5rem;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-feature-settings: "palt";
+    line-height: 1.9;
+    text-underline-offset: 3px;
+  }
+
+  /* 日本語の見出しは行間を詰めて塊として見せる */
+  h1,
+  h2,
+  h3 {
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    font-weight: 900;
+  }
+
+  ::selection {
+    background-color: var(--color-sun);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* チャコール面ではフォーカスリングを白に反転させる */
+  .on-ink :focus-visible {
+    outline-color: #ffffff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/**
+ * 切り抜き写真（透過PNG/WebP）の黄色い縁取り。
+ * 実体は layout.tsx に置いた SVG フィルタ（#cutout-outline）。
+ * アルファをぼかして「しきい値」で切り直すため、輪郭が丸まって滑らかになる。
+ * 太さは layout.tsx の feGaussianBlur の stdDeviation で調整する。
+ *
+ * 旧実装は drop-shadow を8方向に重ねていたが、方向が8つしかないぶん
+ * カーブや斜めの部分が角張り、重ねた分だけ線も太くなっていた。
+ */
+@utility cutout-outline {
+  filter: url(#cutout-outline);
 }
