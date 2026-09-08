@@ -56,10 +56,10 @@ export const heroCutoutLayout: HeroCutoutLayout[] = [
   // この写真は右端と下端が断ち切られているので、右端はパネルに、下端は FV の下端に重ねて隠す。
   // パネル基準にしているのは、どの画面幅でも右辺がパネルの縁に一致させるため
   // （本文基準だと 1640px を超えたあたりからパネルより内側にずれて、直線が露出する）
-  { id: "girl-front", xAnchor: "panel", x: 0.4, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 16 },
+  { id: "girl-front", xAnchor: "panel", x: 0.4, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 14 },
   // 見出しの横に立たせる男の子。見出しとの間隔を保ちたいので本文基準。
   // 幅も本文基準にしないと、広い画面で大きくなりすぎて見出しに届く。
-  { id: "boy-board", xAnchor: "wrap", x: 17.37, yAnchor: "bottom", y: 0.82, widthAnchor: "wrap", width: 9.5 },
+  { id: "boy-board", xAnchor: "wrap", x: 17.37, yAnchor: "bottom", y: 0.82, widthAnchor: "wrap", width: 11 },
   // 左下の角の男の子。この写真は左辺が断ち切られているので、画面の左端からはみ出させて
   // 切り口を画面の外へ逃がす。どの画面幅でもはみ出し量が同じになるよう画面左端基準にしている
   // （画面幅の % で置くと、広い画面ほど右へ寄って切り口が出てくる）。
