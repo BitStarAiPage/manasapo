@@ -16,14 +16,17 @@ export function Features() {
               className="grid gap-6 sm:grid-cols-[1.15fr_0.85fr] sm:items-start"
             >
               <div>
-                <div className="flex items-start gap-4">
+                {/* 番号は leading-none なので箱が数字にぴったり付く。見出しは2行あって
+                    背が高いため、上揃えにすると番号だけ上に寄って見える（実測でスマホ 6px）。
+                    中央揃えにして、見出しが1行でも2行でも中心がそろうようにしている */}
+                <div className="flex items-center gap-4">
                   <p
                     aria-hidden="true"
                     className="text-5xl leading-none font-black text-sun lg:text-6xl"
                   >
                     {feature.number}
                   </p>
-                  <h3 className="pt-1 text-xl whitespace-pre-line sm:text-[1.375rem]">
+                  <h3 className="text-xl whitespace-pre-line sm:text-[1.375rem]">
                     {feature.title}
                   </h3>
                 </div>
