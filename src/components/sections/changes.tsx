@@ -14,11 +14,11 @@ const caseParagraphs = [
 
 export function Changes() {
   return (
-    <section id="changes" className="scroll-mt-24 bg-ivory py-16 lg:py-24">
+    <section id="changes" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
       <Wrap>
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-14">
           <div>
-            <h2 className="text-[2.5rem] sm:text-5xl lg:text-6xl">生徒の変化</h2>
+            <h2 className="text-[2.5rem] sm:text-5xl lg:text-6xl leading-[1.25] tracking-[0.03em]">生徒の変化</h2>
             <p className="mt-6 max-w-[38rem] text-base leading-[1.95] sm:text-lg">{intro}</p>
 
             <h3 className="mt-10 text-lg sm:text-xl">

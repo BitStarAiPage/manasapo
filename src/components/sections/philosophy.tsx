@@ -11,14 +11,19 @@ const paragraphs = [
 
 export function Philosophy() {
   return (
-    <section id="philosophy" className="scroll-mt-24 bg-ivory py-16 lg:py-24">
+    <section id="philosophy" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
       <Wrap>
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-14">
           <div>
-            <h2 className="text-[2.5rem] sm:text-5xl lg:text-6xl xl:text-[4.5rem]">
-              一生ものの
-              <br />
-              「学び方」を。
+            {/* PC は2行、1023px 以下は1行。
+                PC で1行にすると左カラム（1024px で 484px）に 683px 必要で入らない。
+                1023px 以下は逆に全幅を使えるので1行に収まる。
+                スマホの `8.1vw` は、1行に必要な 429px を 375px 幅（使えるのは 335px）に
+                収めるための伸縮。320px でも収まる上限で、494px 以上は 2.5rem で頭打ち。
+                ★ 文字を増やすと必要な幅が変わるので、その時は vw も測り直すこと。 */}
+            <h2 className="text-[clamp(1.5rem,8.1vw,2.5rem)] leading-[1.25] tracking-[0.03em] sm:text-5xl lg:text-6xl xl:text-[4.5rem]">
+              <span className="lg:block">一生ものの</span>
+              <span className="lg:block">「学び方」を。</span>
             </h2>
 
             <div className="mt-8 max-w-[38rem] space-y-6">

@@ -25,7 +25,7 @@ export function SiteHeader() {
       <Wrap>
         <div className="flex h-16 items-center gap-4 lg:h-20 lg:gap-6">
           <a href="#hero" className="flex shrink-0 items-center gap-3" onClick={close}>
-            <Logo className="h-10 w-auto lg:h-14" alt={`${site.name} トップへ`} />
+            <Logo className="h-12 w-auto lg:h-16" alt={`${site.name} トップへ`} />
             <span className="hidden text-xs font-bold leading-tight xl:block">{site.tagline}</span>
           </a>
 

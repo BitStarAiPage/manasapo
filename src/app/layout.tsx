@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
+import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { site } from "@/content/site";
@@ -26,8 +27,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${notoSansJP.variable} h-full antialiased`}
     >
+      <head>
+        {/* JS が動かない環境では、登場アニメーション待ちのイラストが隠れたままになる。
+            その場合だけ初期状態を打ち消して、最初から見えるようにしておく */}
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: "[data-reveal]{opacity:1!important;transform:none!important}",
+            }}
+          />
+        </noscript>
+      </head>
       <body className="flex min-h-full flex-col">
         <CutoutOutlineFilter />
+        {/* data-reveal が付いたイラストを、画面に入った順に表示していく */}
+        <RevealOnScroll />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

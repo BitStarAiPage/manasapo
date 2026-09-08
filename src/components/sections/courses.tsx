@@ -1,25 +1,34 @@
 import { courses } from "@/content/courses";
 import { media } from "@/content/media";
+import { floatStyle } from "@/lib/reveal";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 import { cn } from "@/lib/cn";
 
 export function Courses() {
   return (
-    <section id="courses" className="scroll-mt-24 bg-mint py-16 lg:py-24">
+    <section id="courses" className="scroll-mt-24 bg-mint py-12 lg:py-16">
       <Wrap>
-        <h2 className="text-2xl sm:text-3xl">コース紹介</h2>
+        <h2 className="text-2xl sm:text-3xl leading-[1.25] tracking-[0.03em]">コース紹介</h2>
 
         {/* 学年別の入口。同じページ内のコースブロックへ移動する */}
         <div className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
-          {courses.map((course) => (
+          {courses.map((course, index) => (
             <a
               key={course.id}
               href={`#${course.id}`}
               className="flex items-center justify-between gap-3 rounded-xl border-2 border-ink bg-white px-6 py-4 text-lg font-bold transition-colors hover:bg-ink hover:text-white sm:text-xl"
             >
               {course.title}
-              <span aria-hidden="true">↓</span>
+              {/* 2つの矢印が揃って動かないよう、長さとずれを変えている。
+                  transform を効かせるため inline-block にしている（見た目は変わらない） */}
+              <span
+                aria-hidden="true"
+                className="float-slow inline-block"
+                style={floatStyle(index === 0 ? 5.8 : 6.6, index === 0 ? 0 : 0.9)}
+              >
+                ↓
+              </span>
             </a>
           ))}
         </div>

@@ -5,9 +5,9 @@ import { Wrap } from "@/components/ui/wrap";
 
 export function Features() {
   return (
-    <section id="features" className="on-ink scroll-mt-24 bg-ink py-16 text-white lg:py-24">
+    <section id="features" className="on-ink scroll-mt-24 bg-ink py-12 text-white lg:py-16">
       <Wrap>
-        <h2 className="text-[2rem] sm:text-4xl lg:text-5xl">まなサポの特徴</h2>
+        <h2 className="text-[2rem] sm:text-4xl lg:text-5xl leading-[1.25] tracking-[0.03em]">まなサポの特徴</h2>
 
         <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-16">
           {features.map((feature, index) => (

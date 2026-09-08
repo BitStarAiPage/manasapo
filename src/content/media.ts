@@ -11,8 +11,23 @@
  *   - whiteboard.jpg  … ホワイトボードに書く生徒の笑顔（hero-cutout.webp の元カット）
  *   同じ写真を複数箇所で使い回している状態です。
  *
- * ★ `/images/` 直下の room-*.jpg は 2026-09-04 支給の教室内観（人物なし）。まだ未使用。
+ * ★ `/images/` 直下の room-*.jpg は 2026-09-04 支給の教室内観（人物なし・実写真）。
+ *   トップページでは現在どれも使っていない（生成画像に置き換わったため）。
+ *   room-booth だけ別案FV（/alt）で使用。実写真に戻したくなったときの候補として残す。
  *   study-pair / teaching-whiteboard / desk-talk / whiteboard-smile は上記4枚と重複。
+ *
+ * ★★ 次の画像は AI 生成（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
+ *   実写真が届いたら差し替えてください（2026-09-08 にユーザー確認済み）。
+ *   - hero-lesson-three.webp / hero-teacher-student.jpg … FV の写真パネル
+ *   - staff/*.webp, students/*.webp … 講師・生徒の切り抜き
+ *   - updates-room.png / updates-study.png / updates-event.png … 最近のまなサポ
+ *   - access-classroom.png … 教室・アクセス
+ *   - message-lesson.png … 塾に込めた思い
+ *   - course-junior.png / course-senior.png … コース紹介
+ *   - feature-lesson / feature-method / feature-team / feature-ski.png … まなサポの特徴
+ *   - changes-case01.png … 生徒の変化 CASE 01
+ *   alt は「まなサポの〜」と断定せず、写っている場面をそのまま書くこと
+ *   （実在の教室・人物だと読み上げてしまわないため）。
  *
  * - `src` に `/images/...` のパスを入れると実写真が表示されます（ファイルは `public/images/` に置く）。
  * - `src` が未設定のあいだは、同じ縦横比のプレースホルダー枠が表示されレイアウトは崩れません。
@@ -89,35 +104,64 @@ export const media: Record<MediaKey, Media> = {
     label: "自分で考え、整理する生徒の写真",
     ratio: "4 / 3",
   },
+  /**
+   * コース紹介の2枚。2026-09-08 支給の AI 生成画像（ChatGPT）。実在の講師・生徒ではありません。
+   * 元画像は 2.2:1 の横長で、枠の 3/2 より横に広いので左右が切れる。
+   * 中央に人物が寄っているので focus は既定（中央）のままでよい。
+   */
   courseJunior: {
-    src: "/images/from-current-site/group-study.jpg",
-    alt: "小・中学生への個別指導の様子",
+    src: "/images/course-junior.png",
+    alt: "教材を指しながら小学生と中学生に説明する講師",
     label: "小・中学生への指導写真",
     ratio: "3 / 2",
   },
   courseSenior: {
-    src: "/images/from-current-site/classroom.jpg",
-    alt: "高校生が学習している様子",
+    src: "/images/course-senior.png",
+    alt: "ノートを見せ合いながら学習する高校生3人",
     label: "高校生の学習写真",
     ratio: "3 / 2",
   },
+  /**
+   * 「生徒の変化 CASE 01」の写真。2026-09-08 支給の AI 生成画像（ChatGPT）。
+   *
+   * ★ 本文は「大きなホワイトボードいっぱいにテスト範囲をまとめる」勉強法（＝「呪い」）の話だが、
+   *   この写真はノートに問題を解いている場面で、ホワイトボードは写っていない。
+   *   本文に合わせるならホワイトボードのカットが要る（`label` はその想定のまま残してある）。
+   *
+   * 元画像は 1073x1466 の縦長。3/2 の枠には高さの 49% しか入らないので、
+   * 2人の顔（上から35〜55%）とノート（同55〜90%）が残る位置に寄せている。
+   */
   case01: {
-    src: "/images/from-current-site/whiteboard.jpg",
-    alt: "ホワイトボード一面にテスト範囲をまとめる生徒",
+    src: "/images/changes-case01.png",
+    alt: "机を並べてノートに問題を解く2人の生徒",
     label: "「呪い」勉強法のホワイトボード写真",
     ratio: "3 / 2",
+    focus: "50% 55%",
   },
+  /**
+   * 「塾に込めた思い（"学ぶ力"は"生きる力"！）」に添える写真。
+   * 瀬尾さんご本人の写真は未支給のため、指導の場面を当てている。
+   * 2026-09-08 支給の AI 生成画像（ChatGPT）。元画像 1470x1070 で枠の 4/3 とほぼ同じ比率。
+   */
   message: {
-    src: "/images/from-current-site/classroom.jpg",
-    alt: "まなサポの教室",
+    src: "/images/message-lesson.png",
+    alt: "答案を指しながら生徒に説明する講師",
     label: "瀬尾さん、または教室の写真",
     ratio: "4 / 3",
   },
+  /**
+   * 教室・アクセスの写真。教室全体が入る引きのカットにしている
+   * （2026-09-08 支給の AI 生成画像。それまでは実写真の room-booth.jpg を置いていた）。
+   *
+   * 元画像は 1085x1450 の縦長で、4/3 の枠には高さの 56% しか入らない。
+   * 上は天井なので、机と本棚が残る位置へ下げている。
+   */
   classroom: {
-    src: "/images/from-current-site/classroom.jpg",
-    alt: "まなサポ教室の内観",
+    src: "/images/access-classroom.png",
+    alt: "机とホワイトボード、本棚が並ぶ教室",
     label: "教室の内観・入口の写真",
     ratio: "4 / 3",
+    focus: "50% 62%",
   },
 };
 
@@ -138,45 +182,76 @@ export const heroPanelPhotos: Media[] = [
   },
 ];
 
-/** 「最近のまなサポ」の写真枠。投稿本文・日付・URL は未支給。 */
+/**
+ * 「最近のまなサポ」の写真枠。投稿本文・日付・URL は未支給。
+ *
+ * ★ 3枚とも 2026-09-08 支給の AI 生成画像（ChatGPT）。実在の教室・生徒ではありません。
+ *
+ * 元画像は 1〜3枚目の順に 1085x1450 / 1065x1477 / 1536x1024。
+ * 枠は横長の 3/2 なので、縦長の2枚は上下が切れる（focus で見せたい高さに寄せている）。
+ */
 export const updateMedia: Media[] = [
   {
-    src: "/images/from-current-site/group-study.jpg",
-    alt: "机を囲んで学習する生徒たち",
+    src: "/images/updates-room.png",
+    alt: "緑のカーペットに机と仕切りが並ぶ教室",
     label: "教室の様子",
     ratio: "3 / 2",
+    // 元画像 1074x1464 の縦長。3/2 の枠には高さの 49% しか入らないので、
+    // 天井を外して机と椅子が残る位置へ下げる
+    focus: "50% 62%",
   },
   {
-    src: "/images/from-current-site/whiteboard.jpg",
-    alt: "ホワイトボードに書きながら学習する生徒",
+    src: "/images/updates-study.png",
+    alt: "プリントに向かって問題を解く2人の生徒",
     label: "学習の様子",
     ratio: "3 / 2",
+    // 3/2 に切ると元画像の高さの 48% しか出ない。手前の生徒の頭（上から 35%）から
+    // 手元（同 81%）までが入るのがこのあたり
+    focus: "50% 58%",
   },
-  { alt: "イベントの様子", label: "イベント", ratio: "3 / 2" },
+  {
+    src: "/images/updates-event.png",
+    alt: "机を囲んでお菓子を食べながら談笑する生徒とスタッフ",
+    label: "イベント",
+    ratio: "3 / 2",
+  },
 ];
 
-/** 「まなサポの特徴」01〜04 に添える写真枠。 */
+/**
+ * 「まなサポの特徴」01〜04 に添える写真。並び順は `src/content/features.ts` と対応する。
+ *
+ * ★ 4枚とも 2026-09-08 支給の AI 生成画像（ChatGPT）。実在の講師・生徒ではありません。
+ *   元画像はすべて 1448x1086（＝4:3）で枠の比率と一致するため、切れる部分はない。
+ */
 export const featureMedia: Media[] = [
   {
-    src: "/images/from-current-site/teaching.jpg",
-    alt: "最大1対2の個別指導の様子",
+    // 01 学びの土台となる「基本」を盤石にする（最大1対2の個別指導）
+    src: "/images/feature-lesson.png",
+    alt: "教科書を指しながら2人の生徒に説明する講師",
     label: "個別指導の写真",
     ratio: "4 / 3",
   },
   {
-    src: "/images/from-current-site/whiteboard.jpg",
-    alt: "勉強法を相談している様子",
+    // 02 一人ひとりに合う「学び方」を一緒につくる
+    src: "/images/feature-method.png",
+    alt: "ホワイトボードに書いた考えを講師に説明する生徒",
     label: "勉強法の相談の写真",
     ratio: "4 / 3",
   },
   {
-    src: "/images/from-current-site/group-study.jpg",
-    alt: "スタッフが生徒の様子を共有している場面",
+    // 03 担当講師＋チームまなサポ全員でサポート
+    src: "/images/feature-team.png",
+    alt: "1人の生徒のノートを2人のスタッフが一緒に見ている場面",
     label: "スタッフ連携の写真",
     ratio: "4 / 3",
   },
-  // 合宿・イベントの写真は現サイトに無いため支給待ち
-  { alt: "合宿やイベントの様子", label: "教室外の活動の写真", ratio: "4 / 3" },
+  {
+    // 04 塾の中だけで終わらない、学びと挑戦をつくる（スキー合宿）
+    src: "/images/feature-ski.png",
+    alt: "ゲレンデでスキーブーツの留め具を直してもらう生徒たち",
+    label: "教室外の活動の写真",
+    ratio: "4 / 3",
+  },
 ];
 
 /**

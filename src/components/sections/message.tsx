@@ -12,12 +12,15 @@ const paragraphs = [
 
 export function Message() {
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-12 lg:py-16">
       <Wrap>
         <div className="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
-          <div id="message" className="scroll-mt-24">
+          {/* お問い合わせフォームの「ご質問等」も name="message" を使うため、
+              id が重複しないよう owner-message にしている（重複すると label と入力欄の
+              ひも付けが切れ、ラベルを押しても入力欄にフォーカスが移らない） */}
+          <div id="owner-message" className="scroll-mt-24">
             <p className="text-lg font-black">塾に込めた思い</p>
-            <h2 className="mt-2 text-[1.75rem] sm:text-4xl lg:text-[2.75rem]">
+            <h2 className="mt-2 text-[1.75rem] sm:text-4xl lg:text-[2.75rem] leading-[1.25] tracking-[0.03em]">
               “学ぶ力”は“生きる力”！
             </h2>
 
@@ -48,7 +51,7 @@ export function Message() {
             </div>
 
             <div id="social" className="scroll-mt-24">
-              <h2 className="text-xl sm:text-2xl">まなサポを、もっと知る</h2>
+              <h2 className="text-xl sm:text-2xl leading-[1.25] tracking-[0.03em]">まなサポを、もっと知る</h2>
               <ul className="mt-5 grid grid-cols-3 gap-3">
                 {socialLinks.map((link) => (
                   <li key={link.name}>

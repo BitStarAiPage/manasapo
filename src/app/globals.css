@@ -13,6 +13,22 @@
   --color-orange: #f2a900; /* 切り抜きの縁取り。黄色地でも沈まない濃さの同系色 */
 
   --font-sans: var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
+
+  /* FV のリード文を2行に収められる幅。写真パネル（画面幅の 48%）の左までに
+     1行目の 553px が入るのがこのあたりから。`fv:` として使う */
+  --breakpoint-fv: 1400px;
+}
+
+/**
+ * FV の写真パネルが始まる位置。
+ *
+ * ダイカットの `xAnchor: "panel"`（右端をパネルの縁に合わせる置き方）が
+ * この値を見て位置を組み立てるので、**hero.tsx のパネル幅と必ず対で変えること**。
+ * パネル（hero.tsx の `w-[52%]`）は 1024px 以上でしか出さないので値は1つ。
+ * ずれると、パネルの縁に隠していた切り抜きの断ち切り面が露出します。
+ */
+:root {
+  --hero-panel-left: 48vw;
 }
 
 @layer base {
@@ -30,7 +46,16 @@
     text-underline-offset: 3px;
   }
 
-  /* 日本語の見出しは行間を詰めて塊として見せる。詰めすぎると2行の見出しが窮屈になるので 1.6 */
+  /**
+   * 見出しの共通指定。
+   *
+   * ★ ここの `line-height` は Tailwind の `text-6xl` などに負ける。
+   *   font-size のユーティリティは line-height も一緒に指定するうえ、
+   *   utilities レイヤーは base レイヤーより強いため。
+   *   実際の行間・字間は各見出しの `leading-[1.4] tracking-[0.03em]` が持っている
+   *   （変えるときはセクション側のクラスを直すこと。ここを触っても効かない）。
+   *   font-weight と、size を持たない見出しの既定値としてだけ意味がある。
+   */
   h1,
   h2,
   h3 {
@@ -82,3 +107,110 @@
 @utility cutout-outline {
   filter: url(#cutout-outline);
 }
+
+/* ==================================================================
+ * イラスト（切り抜き写真・アバター・小さなアイコン）の動き
+ *
+ * 対象は「装飾として置いているもの」だけ。本文・見出し・矩形の写真には掛けない。
+ * transform と opacity しか動かさないので、レイアウトは一切ずれない。
+ *
+ * ■ 使い方
+ *   登場   … 要素に `data-reveal=""` を付け、`src/lib/reveal.ts` の revealStyle() を
+ *            style に渡す。画面に入ると RevealOnScroll が `data-reveal="in"` にする。
+ *   浮遊   … 要素に `float-slow` クラスを付け、floatStyle() で長さとずれを渡す。
+ *            （アバターと小さなアイコン用。ダイカットは `walk-2frame`）
+ *
+ * ■ 動かさない条件
+ *   - prefers-reduced-motion: reduce … 下の @media で初期状態を作らないので、
+ *     最初から見えたまま。既存の reduce ブロックがアニメーションも止める。
+ *   - JS が動かない場合 … layout.tsx の <noscript> で opacity を戻す。
+ * ================================================================== */
+
+/* SP では移動量を PC の 65% に抑える（画面が狭いぶん同じ距離だと大きく感じるため） */
+:root {
+  --motion-shift: 1;
+}
+
+@media (max-width: 639.98px) {
+  :root {
+    --motion-shift: 0.65;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 登場前。移動量だけ --motion-shift で縮め、回転と拡大はそのまま */
+  [data-reveal] {
+    opacity: 0;
+    transform: translate(
+        calc(var(--reveal-x, 0px) * var(--motion-shift)),
+        calc(var(--reveal-y, 30px) * var(--motion-shift))
+      )
+      rotate(var(--reveal-rotate, 0deg)) scale(var(--reveal-scale, 0.98));
+    transition:
+      opacity var(--reveal-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1)
+        var(--reveal-delay, 0ms),
+      transform var(--reveal-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1)
+        var(--reveal-delay, 0ms);
+  }
+
+  /* 登場後。一度 in になったら戻さない（RevealOnScroll が unobserve する） */
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /**
+   * ダイカット（切り抜き）だけに付ける「その場で歩く」動き。
+   * 手描きイラストの2枚を交互に見せているような、カクッと切り替わる2コマ風。
+   *
+   * ★ `steps(2, end)` は区間を2分割して 0% と 50% の値だけを出す。
+   *   つまり実際に見えるのは「開始のポーズ」と「中間のポーズ」の2つだけ。
+   *   そのため `to` には**見せたい2コマ目の2倍の値**を書いている：
+   *     1コマ目 … translate(0, 1px)   rotate(-0.4deg)
+   *     2コマ目 … translate(1px, 2px) rotate(0.4deg)   ← to の中間値
+   *
+   * ★ 縦は下向きにしか動かさない。女の子と受験本の男の子は下辺が断ち切られていて
+   *   FV や写真の下端で切り口を隠しているので、上げると直線と縁取りが出る。
+   *   `transform-origin: center bottom` で回すと下の角が 0.7px ほど浮くため、
+   *   常時 1px 下げてそのぶんを打ち消している。
+   *
+   * ずれは `--walk-delay` で1枚ずつ変える（3枚が完全に揃うと1つの塊に見えるため）。
+   */
+  .walk-2frame {
+    transform-origin: center bottom;
+    animation: walk-2frame 0.9s steps(2, end) var(--walk-delay, 0s) infinite;
+  }
+
+  /* 常時ゆっくり動く。長さとずれは要素ごとに変えて、揃って動かないようにする */
+  .float-slow {
+    animation-name: float-slow;
+    animation-duration: var(--float-duration, 6s);
+    animation-timing-function: ease-in-out;
+    animation-delay: var(--float-delay, 0s);
+    animation-iteration-count: infinite;
+  }
+
+}
+
+@keyframes walk-2frame {
+  from {
+    transform: translate(0, 1px) rotate(-0.4deg);
+  }
+  /* 見せたい2コマ目の2倍。理由は .walk-2frame のコメントを参照 */
+  to {
+    transform: translate(2px, 3px) rotate(1.2deg);
+  }
+}
+
+/* 中空に浮いているイラスト・小さな装飾用。上下に浮きながらわずかに傾く */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(calc(var(--float-tilt, 1deg) * -1));
+  }
+  50% {
+    transform: translateY(calc(var(--float-rise, -6px) * var(--motion-shift)))
+      rotate(var(--float-tilt, 1deg));
+  }
+}
+

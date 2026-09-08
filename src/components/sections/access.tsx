@@ -1,13 +1,14 @@
 import { access } from "@/content/site";
 import { media } from "@/content/media";
+import { floatStyle } from "@/lib/reveal";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
 export function Access() {
   return (
-    <section id="access" className="scroll-mt-24 bg-ivory py-16 lg:py-24">
+    <section id="access" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
       <Wrap>
-        <h2 className="text-2xl sm:text-3xl">教室・アクセス</h2>
+        <h2 className="text-2xl sm:text-3xl leading-[1.25] tracking-[0.03em]">教室・アクセス</h2>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-3 lg:gap-10">
           <Photo
@@ -24,7 +25,13 @@ export function Access() {
             className="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-mint-deep bg-mint p-8 text-center transition-colors hover:bg-mint-deep"
             style={{ aspectRatio: "4 / 3" }}
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-10 w-10">
+            {/* 常時ゆっくり浮くのはこのピンだけ。同じセクションに他の装飾は無い */}
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="float-slow h-10 w-10"
+              style={floatStyle(6.2, 0.4)}
+            >
               <path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="currentColor" />
               <circle cx="12" cy="10" r="2.6" fill="#dff1e7" />
             </svg>

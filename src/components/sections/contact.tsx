@@ -17,14 +17,16 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 bg-sun py-16 lg:py-24">
+    <section id="contact" className="scroll-mt-24 bg-sun py-12 lg:py-16">
       <Wrap>
         <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
           <div className="lg:pt-4">
-            <h2 className="text-[2rem] sm:text-4xl lg:text-5xl">
-              無料体験・
-              <br />
-              お問い合わせ
+            {/* PC だけ2行にする。この見出しは `lg:grid-cols-[auto_1fr]` の auto 側にいるので、
+                1行のままだと見出しの列が横に伸びてフォームが狭くなる。
+                1023px 以下は横幅が足りないので1行のまま（span が inline のまま）。 */}
+            <h2 className="text-[clamp(1.5rem,8.1vw,2rem)] leading-[1.25] tracking-[0.03em] sm:text-4xl lg:text-5xl">
+              <span className="lg:block">無料体験・</span>
+              <span className="lg:block">お問い合わせ</span>
             </h2>
           </div>
 

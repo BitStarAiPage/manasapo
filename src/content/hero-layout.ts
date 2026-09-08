@@ -59,15 +59,22 @@ export const heroCutoutLayout: HeroCutoutLayout[] = [
   { id: "girl-front", xAnchor: "panel", x: 0.4, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 16 },
   // 見出しの横に立たせる男の子。見出しとの間隔を保ちたいので本文基準。
   // 幅も本文基準にしないと、広い画面で大きくなりすぎて見出しに届く。
-  { id: "boy-board", xAnchor: "wrap", x: 36.58, yAnchor: "bottom", y: 72.14, widthAnchor: "wrap", width: 9.5 },
+  { id: "boy-board", xAnchor: "wrap", x: 17.37, yAnchor: "bottom", y: 0.82, widthAnchor: "wrap", width: 9.5 },
   // 左下の角の男の子。この写真は左辺が断ち切られているので、画面の左端からはみ出させて
   // 切り口を画面の外へ逃がす。どの画面幅でもはみ出し量が同じになるよう画面左端基準にしている
   // （画面幅の % で置くと、広い画面ほど右へ寄って切り口が出てくる）。
-  { id: "boy-book", xAnchor: "screen", x: 4.39, yAnchor: "bottom", y: -0.82, widthAnchor: "wrap", width: 10 },
+  // 大きさの上限は「無料体験に申し込む」ボタン。本文が最大幅になる 1640px 付近が一番きつく、
+  // この幅ではボタンが画面左端から 56px の位置に来て、切り抜きの真上に重なる。
+  // 元画像は下端（持っている本の下）が断ち切られているので、y: 0 で FV の下端に接地させ、
+  // 切り口だけを隠して本は全部見せる。沈めると本が隠れてしまう。
+  // このために Hero の min-h を 42rem にしてボタンの下に高さを確保している。
+  { id: "boy-book", xAnchor: "screen", x: 4.39, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 12 },
 ];
 
-/** 写真パネルの左端の位置（画面幅に対する %）。Hero の写真パネル `w-[52%]` と対になる値 */
-export const PANEL_LEFT_PERCENT = 48;
+/**
+ * 写真パネルの左端の位置は `globals.css` の `--hero-panel-left` が持っている。
+ * 画面幅で変わる（タブレット 58vw / PC 48vw）ので、JS の定数では表せないため。
+ */
 
 /**
  * 本文（Wrap）の最大幅。`xAnchor: "wrap"` の計算と編集画面の当たり判定で共有する。
@@ -94,8 +101,9 @@ export function heroCutoutStyle(layout: HeroCutoutLayout): CSSProperties {
     // 画面の左端から、自分の幅の x% だけはみ出させる
     left = `calc(${width} * ${layout.x} / -100)`;
   } else if (layout.xAnchor === "panel") {
-    // 右端をパネルの左端に合わせ、x のぶんだけパネルに食い込ませる
-    left = `calc(${PANEL_LEFT_PERCENT + layout.x}vw - ${width})`;
+    // 右端をパネルの左端に合わせ、x のぶんだけパネルに食い込ませる。
+    // パネルの位置は画面幅で変わるので CSS 変数から読む（globals.css の --hero-panel-left）
+    left = `calc(var(--hero-panel-left) + ${layout.x}vw - ${width})`;
   } else {
     left = `${layout.x}%`;
   }
@@ -110,4 +118,65 @@ export function heroCutoutStyle(layout: HeroCutoutLayout): CSSProperties {
     width,
     transform: `translate(${shiftX}, ${shiftY})`,
   };
+}
+
+/* ==================================================================
+ * 1023px 以下（スマホ・タブレット共通）のダイカット。
+ *
+ * PC とは置き方がまったく違うので別の配列にしている：
+ *   PC     … FV 全体に対する絶対配置（`heroCutoutLayout`）
+ *   1023以下 … 「横長写真の上」か「サブコピーの右」のどちらかに置く
+ *
+ * 値はすべて置き場所に対する % なので、スマホでも同じ構図のまま縮む。
+ * ただし **"copy" の枠はタブレット（768px 以上）にしか無い**。
+ * スマホは本文が画面いっぱいに広がり、切り抜きを置く余白が残らないため。
+ *
+ * `/fv-editor` を **画面幅 1023px 以下** で開くと、この配列をドラッグで編集できる。
+ * ================================================================== */
+
+export type HeroNarrowCutoutId = "girl-front" | "boy-book" | "boy-board";
+
+export type HeroNarrowLayout = {
+  id: HeroNarrowCutoutId;
+  /**
+   * 置き場所。**それぞれ出る画面幅が決まっている**（枠自体が CSS で出し分けられているため）。
+   * - "photo"    … 見出しの下に敷く横長写真の上（1023px 以下すべて）
+   * - "copy"     … サブコピー＋ボタンの右の余白（768〜1023px のみ。
+   *                スマホは本文が全幅で余白が残らない）
+   * - "headline" … 見出しの右の余白（767px 以下のみ。
+   *                768px 以上は見出しが1行になり、この余白が無くなる）
+   */
+  area: "photo" | "copy" | "headline";
+  /** 左端の位置（置き場所の幅に対する %）。マイナスで画面の外へ出る */
+  x: number;
+  /** 下端の位置（px）。0 で置き場所の下端にそろう。マイナスで下へ出る */
+  y: number;
+  /** 幅（置き場所の幅に対する %） */
+  width: number;
+};
+
+export const heroNarrowCutoutLayout: HeroNarrowLayout[] = [
+  // 右辺と下辺が断ち切られている。右辺は画面の外へ、下辺は写真の下端にそろえて隠す。
+  // ★ x を小さくすると右辺の切り口が、y を上げると下辺の切り口が見えるので注意
+  { id: "girl-front", area: "photo", x: 79, y: 0, width: 24 },
+  // 左辺と下辺が断ち切られている。左辺は画面の外へ逃がす。
+  // ★ x を 0 に近づけると左辺の切り口が見える
+  { id: "boy-book", area: "photo", x: -2, y: 0, width: 20 },
+  // 輪郭が一周つながっている唯一の1枚。宙に置けるので余白に立たせている。
+  // 置き場所が幅で変わるので同じ写真を2件に分けている（出る幅が重ならないので同時には出ない）。
+  // タブレット（768〜1023px）：サブコピーの右
+  { id: "boy-board", area: "copy", x: 69.42, y: -29, width: 18 },
+  // スマホ（〜767px）：見出し1行目の右。
+  // ★ 幅の上限は「見出しの上余白（hero.tsx の pt-20＝80px）」で決まる。超えると
+  //   切り抜きの頭がヘッダー（同じ黄色・z-50）の裏に潜って切れて見える。
+  //   枠の幅は画面幅なりに伸びるのに、上下の余白は文字サイズでしか増えないので、
+  //   いちばん厳しいのは 600px 付近（文字は 40px のまま枠だけ広がる）。
+  //   80px の余白なら 22% が上限。これ以上大きくしたいときは pt-20 も一緒に増やす。
+  // y は「枠の下から 58px」＝1行目の下端。下げると2行目（右の余白は 7〜22px）に乗る
+  { id: "boy-board", area: "headline", x: 77, y: 58, width: 22 },
+];
+
+/** 1023px 以下のダイカットを CSS に変換する。FV 本体と編集画面のつまみで共用する */
+export function heroNarrowCutoutStyle(layout: HeroNarrowLayout): CSSProperties {
+  return { left: `${layout.x}%`, bottom: `${layout.y}px`, width: `${layout.width}%` };
 }
