@@ -44,12 +44,17 @@ export const media: Record<MediaKey, Media> = {
   // ★ これは AI 生成画像（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
   //    実写真が用意できたら差し替えてください。
   heroMain: {
-    src: "/images/hero-teacher-student.jpg",
-    alt: "参考書を開いて生徒に説明する講師",
+    src: "/images/hero-lesson-three.webp",
+    alt: "机を囲んで学習する2人の生徒と、笑顔で見守る講師",
     label: "生徒と講師が対話している写真",
     ratio: "3 / 2",
+    // PC では縦長に切り抜かれるので、講師の顔が中央に残る位置へ寄せる
+    focus: "50% 45%",
   },
   /**
+   * ★ 現在この写真は FV では使っていません（授業カットを外し、生徒の切り抜きに置き換えたため）。
+   *   戻したくなったときのために残しています。
+   *
    * FV 前面に重ねる切り抜き（透過PNG/WebP）。黄色い縁取りが自動で付きます。
    * `ratio` は写真そのものの比率ではなく「置き場所の箱」の比率です。
    * 人物が大きすぎる／小さすぎるときはここと Hero の幅指定で調整します。
@@ -61,9 +66,10 @@ export const media: Record<MediaKey, Media> = {
     ratio: "4 / 3",
   },
   /**
-   * FV 右端にもう1枚重ねる切り抜き。
+   * FV 右端に重ねる切り抜き。
    * この写真は元画像の時点で右端・下端が断ち切られているため、宙に浮かせると
-   * 縁取りに直線が出る。右にはみ出させ、下は画面下端に接地させて切り口を逃がしている。
+   * 縁取りに直線が出る。右にはみ出させ、下は FV の下端に接地させて切り口を逃がしている。
+   * ★ この置き方が前提の写真なので、動かすときは切り口が出ないか必ず確認すること。
    */
   heroCutoutRight: {
     src: "/images/students/student-04.webp",
@@ -114,6 +120,23 @@ export const media: Record<MediaKey, Media> = {
     ratio: "4 / 3",
   },
 };
+
+/**
+ * FV 右の写真パネルで順に切り替える写真。
+ * 1枚目が最初に出るもので、以降を数秒ごとにクロスフェードします。
+ * 増減はこの配列だけで完結します（1枚にすれば切り替えは止まります）。
+ *
+ * ★ どちらも AI 生成画像（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
+ */
+export const heroPanelPhotos: Media[] = [
+  media.heroMain,
+  {
+    src: "/images/hero-teacher-student.jpg",
+    alt: "参考書を開いて生徒に説明する講師",
+    label: "生徒と講師が対話している写真",
+    ratio: "3 / 2",
+  },
+];
 
 /** 「最近のまなサポ」の写真枠。投稿本文・日付・URL は未支給。 */
 export const updateMedia: Media[] = [
@@ -208,6 +231,12 @@ export const heroAltCutouts: Media[] = [
  *   student-01 = 65.3% / student-02 = 49.2% / student-03 = 26.9%
  * 3枚を同じ値で扱うため、最も浅い 26.9% より上の 25% を採用している。
  * 頭は円の上端から出て、顔から下は円の中に収まる。
+ */
+/**
+ * ★ 現在 FV に置いているのは student-01・student-02 の2枚（どちらも男の子）です。
+ *   student-03 は未使用ですが、輪郭が一周つながっている扱いやすい一枚なので残しています。
+ *   ダイカットは見出しやリード文にかぶらない位置にだけ置く方針なので、
+ *   増やすときは置き場所の余白があるか `/fv-editor` で確かめてください。
  */
 export const heroBadgeMedia: (Media & { popoutClip: number })[] = [
   {

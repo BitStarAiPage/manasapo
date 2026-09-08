@@ -1,6 +1,5 @@
 import { courses } from "@/content/courses";
 import { media } from "@/content/media";
-import { RightArrowDoodle } from "@/components/ui/doodles";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 import { cn } from "@/lib/cn";
@@ -9,10 +8,7 @@ export function Courses() {
   return (
     <section id="courses" className="scroll-mt-24 bg-mint py-16 lg:py-24">
       <Wrap>
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl">コース紹介</h2>
-          <RightArrowDoodle className="w-20 text-ink" />
-        </div>
+        <h2 className="text-2xl sm:text-3xl">コース紹介</h2>
 
         {/* 学年別の入口。同じページ内のコースブロックへ移動する */}
         <div className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">

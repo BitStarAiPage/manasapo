@@ -11,12 +11,15 @@ import { cn } from "@/lib/cn";
 export function CutoutPhoto({
   media,
   className,
+  style,
   sizes = "24vw",
   showPlaceholder = false,
   eager = false,
 }: {
   media: Media;
   className?: string;
+  /** 位置・サイズを数値で渡したいときに使う。aspect-ratio は常にこちらが上書きしない */
+  style?: React.CSSProperties;
   sizes?: string;
   /** FV など LCP になる切り抜きだけ true。即時読み込み＋優先度を上げる */
   eager?: boolean;
@@ -33,7 +36,7 @@ export function CutoutPhoto({
           "flex flex-col items-center justify-center gap-0.5 rounded-t-full border-2 border-dashed border-ink/25 bg-ivory/60 px-3 text-center",
           className,
         )}
-        style={{ aspectRatio: media.ratio }}
+        style={{ ...style, aspectRatio: media.ratio }}
       >
         <span className="text-xs font-bold text-ink-soft">{media.label}</span>
         <span className="text-[0.6875rem] text-ink-soft/70">透過PNG準備中</span>
@@ -42,7 +45,7 @@ export function CutoutPhoto({
   }
 
   return (
-    <div className={cn("cutout-outline", className)} style={{ aspectRatio: media.ratio }}>
+    <div className={cn("cutout-outline", className)} style={{ ...style, aspectRatio: media.ratio }}>
       <Image
         src={media.src}
         alt={media.alt}

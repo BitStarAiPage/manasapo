@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { access, gradeOptions } from "@/content/site";
-import { RightArrowDoodle } from "@/components/ui/doodles";
 import { Wrap } from "@/components/ui/wrap";
 
 const fieldClass =
@@ -27,7 +26,6 @@ export function Contact() {
               <br />
               お問い合わせ
             </h2>
-            <RightArrowDoodle className="mt-4 w-28 text-ink lg:mt-6" />
           </div>
 
           <div className="rounded-xl bg-white p-6 sm:p-8 lg:p-10">

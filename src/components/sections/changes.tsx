@@ -1,5 +1,4 @@
 import { media } from "@/content/media";
-import { CircleDoodle } from "@/components/ui/doodles";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -35,14 +34,11 @@ export function Changes() {
           </div>
 
           <div className="lg:pt-10">
-            <div className="relative">
-              <Photo
-                media={media.case01}
-                sizes="(max-width: 1024px) 90vw, 44vw"
-                className="rounded-xl"
-              />
-              <CircleDoodle className="pointer-events-none absolute -inset-3 text-sun sm:-inset-5" />
-            </div>
+            <Photo
+              media={media.case01}
+              sizes="(max-width: 1024px) 90vw, 44vw"
+              className="rounded-xl"
+            />
           </div>
         </div>
       </Wrap>

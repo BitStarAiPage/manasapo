@@ -1,6 +1,5 @@
 import { updateMedia } from "@/content/media";
 import { socialLinks } from "@/content/site";
-import { SwooshDoodle } from "@/components/ui/doodles";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -17,7 +16,6 @@ export function Updates() {
               <br />
               まなサポ
             </h2>
-            <SwooshDoodle className="mt-2 w-32 text-ink" />
           </div>
 
           <ul className="grid gap-6 sm:grid-cols-3">

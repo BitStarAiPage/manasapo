@@ -30,11 +30,11 @@
     text-underline-offset: 3px;
   }
 
-  /* 日本語の見出しは行間を詰めて塊として見せる */
+  /* 日本語の見出しは行間を詰めて塊として見せる。詰めすぎると2行の見出しが窮屈になるので 1.6 */
   h1,
   h2,
   h3 {
-    line-height: 1.45;
+    line-height: 1.6;
     letter-spacing: -0.01em;
     font-weight: 900;
   }

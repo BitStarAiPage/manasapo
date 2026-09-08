@@ -1,5 +1,4 @@
 import { media } from "@/content/media";
-import { MarkedText, SlashesDoodle } from "@/components/ui/doodles";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -17,14 +16,9 @@ export function Philosophy() {
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-14">
           <div>
             <h2 className="text-[2.5rem] sm:text-5xl lg:text-6xl xl:text-[4.5rem]">
-              <MarkedText className="text-sun">
-                <span className="text-ink">一生ものの</span>
-              </MarkedText>
+              一生ものの
               <br />
-              {/* 行頭の「 と行末の 。 は字面の外に余白があるので、その分だけ帯を詰める */}
-              <MarkedText className="text-sun" start="0.08em" end="0.05em">
-                <span className="text-ink">「学び方」を。</span>
-              </MarkedText>
+              「学び方」を。
             </h2>
 
             <div className="mt-8 max-w-[38rem] space-y-6">
@@ -36,13 +30,12 @@ export function Philosophy() {
             </div>
           </div>
 
-          <div className="relative lg:pt-6">
+          <div className="lg:pt-6">
             <Photo
               media={media.philosophy}
               sizes="(max-width: 1024px) 90vw, 44vw"
               className="rounded-xl"
             />
-            <SlashesDoodle className="pointer-events-none absolute -right-2 -bottom-10 hidden w-20 text-sun-deep lg:block" />
           </div>
         </div>
       </Wrap>

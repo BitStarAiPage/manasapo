@@ -1,6 +1,5 @@
 import { access } from "@/content/site";
 import { media } from "@/content/media";
-import { RightArrowDoodle } from "@/components/ui/doodles";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -8,10 +7,7 @@ export function Access() {
   return (
     <section id="access" className="scroll-mt-24 bg-ivory py-16 lg:py-24">
       <Wrap>
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl">教室・アクセス</h2>
-          <RightArrowDoodle className="w-20 text-ink" />
-        </div>
+        <h2 className="text-2xl sm:text-3xl">教室・アクセス</h2>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-3 lg:gap-10">
           <Photo
