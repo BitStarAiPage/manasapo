@@ -32,6 +32,14 @@ export const heroCutouts: Record<
     layer: string;
     /** 出す画面幅。ダイカットは PC だけなので `lg` 以上に限っている */
     visibility: string;
+    /**
+     * ★ `sizes` には必ず画面幅の条件を書くこと。
+     *   PC と 1023px 以下で別々の要素を出しているので、条件が無いと
+     *   **隠れている方の画像まで実寸で読み込まれる**（1440px で 69KB の無駄があった）。
+     *   使わない幅は `1vw` にして、srcset のいちばん小さい候補だけを取らせる。
+     *   ★ `1px` ではだめ。next/image は `sizes` の中の **vw の最小値**から候補幅を決めるので、
+     *     px 指定は無視されて 640w が下限になってしまう。
+     */
     eager?: boolean;
     /**
      * 登場の入り方。配置に合わせて向きを変える。
@@ -44,7 +52,7 @@ export const heroCutouts: Record<
   "girl-front": {
     media: media.heroCutoutRight,
     label: "女の子",
-    sizes: "16vw",
+    sizes: "(min-width: 1024px) 16vw, 1vw",
     // 写真パネル（z-10）の後ろ。断ち切られた右辺がパネルに完全に隠れる
     layer: "z-0",
     visibility: "hidden lg:block",
@@ -55,7 +63,7 @@ export const heroCutouts: Record<
   "boy-book": {
     media: heroBadgeMedia[1],
     label: "男の子（受験本）",
-    sizes: "10vw",
+    sizes: "(min-width: 1024px) 10vw, 1vw",
     layer: "z-20",
     visibility: "hidden lg:block",
     // 左下の大きい人物。左斜め下から、少し左に傾いた状態で起き上がる
@@ -64,7 +72,7 @@ export const heroCutouts: Record<
   "boy-board": {
     media: heroBadgeMedia[0],
     label: "男の子（ボード）",
-    sizes: "10vw",
+    sizes: "(min-width: 1024px) 10vw, 1vw",
     layer: "z-20",
     // この1枚だけ PC 限定。見出しと写真パネルの間に置く決まりなのに、
     // タブレットではその隙間が 66px しかなく（自身の幅は 73px）、置くと見出しに乗る。
@@ -82,9 +90,21 @@ export const heroNarrowCutouts: Record<
   HeroNarrowLayout["id"],
   { media: Media; label: string; sizes: string }
 > = {
-  "girl-front": { media: media.heroCutoutRight, label: "女の子", sizes: "24vw" },
-  "boy-book": { media: heroBadgeMedia[1], label: "男の子（受験本）", sizes: "20vw" },
-  "boy-board": { media: heroBadgeMedia[0], label: "男の子（ボード）", sizes: "18vw" },
+  "girl-front": {
+    media: media.heroCutoutRight,
+    label: "女の子",
+    sizes: "(max-width: 1023px) 24vw, 1vw",
+  },
+  "boy-book": {
+    media: heroBadgeMedia[1],
+    label: "男の子（受験本）",
+    sizes: "(max-width: 1023px) 20vw, 1vw",
+  },
+  "boy-board": {
+    media: heroBadgeMedia[0],
+    label: "男の子（ボード）",
+    sizes: "(max-width: 1023px) 18vw, 1vw",
+  },
 };
 
 /**
@@ -122,7 +142,7 @@ export function Hero({
       <div className="absolute inset-y-0 right-0 z-10 hidden w-[52%] lg:block">
         <PhotoCrossfade
           photos={heroPanelPhotos}
-          sizes="52vw"
+          sizes="(min-width: 1024px) 52vw, 1vw"
           className="h-full rounded-xl [border-radius:11rem_0_0_0]!"
         />
       </div>
@@ -207,7 +227,7 @@ export function Hero({
           {/* 左上の大きな角丸は PC のパネル（11rem）に合わせた表現。幅なりに 5rem にしている */}
           <PhotoCrossfade
             photos={heroPanelPhotos}
-            sizes="100vw"
+            sizes="(max-width: 1023px) 100vw, 1vw"
             className="h-[42vh] max-h-[44rem] min-h-[12rem] rounded-tl-[3rem] md:h-[62vh] md:rounded-tl-[5rem]"
           />
 
