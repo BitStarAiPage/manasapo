@@ -182,8 +182,8 @@ export function Hero({
         );
       })}
 
-      <Wrap className="relative z-30 pt-20 pb-16 md:pt-8 lg:pt-16 lg:pb-24">
-        {/* 見出しの上余白（pt-20＝80px）は、右に立つ切り抜きの頭が入る高さを確保するため。
+      <Wrap className="relative z-30 pt-14 pb-12 md:pt-8 md:pb-16 lg:pt-16 lg:pb-24">
+        {/* 見出しの上余白（pt-14＝56px）は、右に立つ切り抜きの頭が入る高さを確保するため。
             切り抜きの大きさと対。狭めると 500〜639px で頭がヘッダー
             （同じ黄色・z-50）の裏に潜って切れる。
             768px 以上は見出しの横に切り抜きを置かないので pt-8 に戻している。 */}
@@ -205,7 +205,10 @@ export function Hero({
                 key={item.id}
                 media={heroNarrowCutouts[item.id].media}
                 sizes={heroNarrowCutouts[item.id].sizes}
-                className="walk-2frame absolute"
+                // 幅は % なので画面が広いほど大きくなる。上の余白（pt-14＝56px）は
+                // 文字サイズでしか増えないため、そのままだと 500〜639px で頭がヘッダーに潜る。
+                // 88px で頭打ちにして、狭い端末では % のまま大きく見せている
+                className="walk-2frame absolute max-w-[5.5rem]"
                 style={{ ...heroNarrowCutoutStyle(item), ...walkStyle(2) }}
               />
             ))}
@@ -223,7 +226,7 @@ export function Hero({
             `-mx-5 md:-mx-8` は Wrap の左右余白（px-5 / md:px-8）を打ち消して
             画面幅いっぱいにするため。★ Wrap は `px-5 md:px-8` なので切り替えも md。
             sm にすると 640〜767px で左右 12px ずつはみ出して角丸が切れる。 */}
-        <div className="relative mt-8 -mx-5 md:-mx-8 lg:hidden">
+        <div className="relative mt-6 -mx-5 md:mt-8 md:-mx-8 lg:hidden">
           {/* 左上の大きな角丸は PC のパネル（11rem）に合わせた表現。幅なりに 5rem にしている */}
           <PhotoCrossfade
             photos={heroPanelPhotos}
@@ -250,7 +253,7 @@ export function Hero({
           </div>
         </div>
 
-        <div className="relative mt-8 md:mt-7">
+        <div className="relative mt-6 md:mt-7">
           {/* 行長の指定は本文だけに掛ける。下のボタン列まで掛けると、
               タブレットで幅が足りずボタンの文字が2行に折れる。
               字間を少し詰め、行長を本文枠いっぱいまで使って行数を減らしている。
@@ -267,7 +270,7 @@ export function Hero({
             </span>
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4 md:mt-7">
             <LinkButton href="#contact">無料体験に申し込む</LinkButton>
             <LinkButton href="#contact" variant="outline">
               お問い合わせ

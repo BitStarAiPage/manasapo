@@ -5,7 +5,7 @@ import { Wrap } from "@/components/ui/wrap";
 
 export function Features() {
   return (
-    <section id="features" className="on-ink scroll-mt-24 bg-ink py-12 text-white lg:py-16">
+    <section id="features" className="on-ink scroll-mt-24 bg-ink py-10 text-white lg:py-16">
       <Wrap>
         <h2 className="text-[2rem] sm:text-4xl lg:text-5xl leading-[1.25] tracking-[0.03em]">まなサポの特徴</h2>
 

@@ -11,7 +11,7 @@ const paragraphs = [
 
 export function Message() {
   return (
-    <section className="bg-white py-12 lg:py-16">
+    <section className="bg-white py-10 lg:py-16">
       <Wrap>
         {/* もとは右カラムに「探究学習コーディネート事業」と SNS を並べていたが、
             どちらも独立したセクションへ切り出したので1カラムにしている */}

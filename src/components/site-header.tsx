@@ -23,10 +23,16 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-sun">
       <Wrap>
-        <div className="flex h-16 items-center gap-4 lg:h-20 lg:gap-6">
-          <a href="#hero" className="flex shrink-0 items-center gap-3" onClick={close}>
+        {/* モバイルはメニューボタン（56px）が入るので、64px だと上下 4px しか空かない。
+            76px にして上下 10px を確保している */}
+        <div className="flex h-[4.75rem] items-center gap-4 lg:h-20 lg:gap-6">
+          {/* 1024〜1279px だけ隠す。この幅はナビとボタンが並ぶので入る余地が無い。
+              `min-w-0` はロゴの横のキャッチが伸びてメニューボタンを押し出さないため */}
+          <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={close}>
             <Logo className="h-12 w-auto lg:h-16" alt={`${site.name} トップへ`} />
-            <span className="hidden text-xs font-bold leading-tight xl:block">{site.tagline}</span>
+            <span className="block text-xs leading-tight font-bold lg:hidden xl:block">
+              {site.tagline}
+            </span>
           </a>
 
           <nav aria-label="サイト内メニュー" className="ml-auto hidden lg:block">
@@ -50,17 +56,31 @@ export function SiteHeader() {
             </LinkButton>
           </div>
 
+          {/* メニューボタン。ノートの形にしているぶん「メニュー」の合図が弱いので、
+              文字のラベルを添えて分かるようにしている。
+              - 表紙 … 角丸の枠線
+              - 綴じ … 左寄りの縦線1本
+              - 罫線 … もとの3本線。メニューだと分かる形も兼ねる
+              押せる範囲は 48x56px で、44px の目安を満たしている。 */}
           <button
             type="button"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="ml-auto flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-[5px] rounded-full border-2 border-ink lg:hidden"
+            className="ml-auto flex h-14 w-12 shrink-0 flex-col items-center justify-center gap-1 lg:hidden"
           >
-            <span className="sr-only">{open ? "メニューを閉じる" : "メニューを開く"}</span>
-            <span aria-hidden="true" className="block h-[2px] w-5 bg-ink" />
-            <span aria-hidden="true" className="block h-[2px] w-5 bg-ink" />
-            <span aria-hidden="true" className="block h-[2px] w-5 bg-ink" />
+            <span
+              aria-hidden="true"
+              className="relative flex h-9 w-[30px] flex-col items-center justify-center gap-[4px] rounded-[5px] border-2 border-ink"
+            >
+              <span className="absolute inset-y-[3px] left-[6px] w-[2px] rounded-full bg-ink" />
+              <span className="block h-[2px] w-3 translate-x-[4px] bg-ink" />
+              <span className="block h-[2px] w-3 translate-x-[4px] bg-ink" />
+              <span className="block h-[2px] w-3 translate-x-[4px] bg-ink" />
+            </span>
+            <span className="text-[10px] leading-none font-bold">
+              {open ? "とじる" : "メニュー"}
+            </span>
           </button>
         </div>
       </Wrap>

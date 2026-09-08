@@ -17,7 +17,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 bg-sun py-12 lg:py-16">
+    <section id="contact" className="scroll-mt-24 bg-sun py-10 lg:py-16">
       <Wrap>
         <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
           <div className="lg:pt-4">

@@ -6,7 +6,7 @@ import { Wrap } from "@/components/ui/wrap";
 
 export function Access() {
   return (
-    <section id="access" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
+    <section id="access" className="scroll-mt-24 bg-ivory py-10 lg:py-16">
       <Wrap>
         <h2 className="text-2xl sm:text-3xl leading-[1.25] tracking-[0.03em]">教室・アクセス</h2>
 

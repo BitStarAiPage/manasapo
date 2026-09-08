@@ -19,7 +19,7 @@ import { Wrap } from "@/components/ui/wrap";
  */
 export function Courses() {
   return (
-    <section id="courses" className="scroll-mt-24 bg-mint py-12 lg:py-16">
+    <section id="courses" className="scroll-mt-24 bg-mint py-10 lg:py-16">
       <Wrap>
         <h2 className="text-2xl leading-[1.25] tracking-[0.03em] sm:text-3xl">コース紹介</h2>
 

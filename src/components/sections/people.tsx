@@ -40,7 +40,7 @@ export function People() {
   // 円の外に人物の絵は出ていないので、切り取っても見た目は変わらない。
   // 頭が円の上に飛び出すぶんは overflow-y が visible のままなので残る。
   return (
-    <section id="people" className="scroll-mt-24 overflow-x-clip bg-sun py-12 lg:py-16">
+    <section id="people" className="scroll-mt-24 overflow-x-clip bg-sun py-10 lg:py-16">
       <Wrap>
         <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-14">
           {/* PC だけ2行にする。この見出しは `lg:grid-cols-[auto_1fr]` の auto 側にいるので、

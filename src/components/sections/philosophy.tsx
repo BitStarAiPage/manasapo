@@ -11,7 +11,7 @@ const paragraphs = [
 
 export function Philosophy() {
   return (
-    <section id="philosophy" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
+    <section id="philosophy" className="scroll-mt-24 bg-ivory py-10 lg:py-16">
       <Wrap>
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-14">
           <div>

@@ -56,10 +56,10 @@ export const heroCutoutLayout: HeroCutoutLayout[] = [
   // この写真は右端と下端が断ち切られているので、右端はパネルに、下端は FV の下端に重ねて隠す。
   // パネル基準にしているのは、どの画面幅でも右辺がパネルの縁に一致させるため
   // （本文基準だと 1640px を超えたあたりからパネルより内側にずれて、直線が露出する）
-  { id: "girl-front", xAnchor: "panel", x: 0.4, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 14 },
+  { id: "girl-front", xAnchor: "panel", x: 0.4, yAnchor: "bottom", y: 0, widthAnchor: "wrap", width: 12 },
   // 見出しの横に立たせる男の子。見出しとの間隔を保ちたいので本文基準。
   // 幅も本文基準にしないと、広い画面で大きくなりすぎて見出しに届く。
-  { id: "boy-board", xAnchor: "wrap", x: 17.37, yAnchor: "bottom", y: 0.82, widthAnchor: "wrap", width: 11 },
+  { id: "boy-board", xAnchor: "wrap", x: 17.37, yAnchor: "bottom", y: 0.82, widthAnchor: "wrap", width: 12 },
   // 左下の角の男の子。この写真は左辺が断ち切られているので、画面の左端からはみ出させて
   // 切り口を画面の外へ逃がす。どの画面幅でもはみ出し量が同じになるよう画面左端基準にしている
   // （画面幅の % で置くと、広い画面ほど右へ寄って切り口が出てくる）。
@@ -158,22 +158,23 @@ export type HeroNarrowLayout = {
 export const heroNarrowCutoutLayout: HeroNarrowLayout[] = [
   // 右辺と下辺が断ち切られている。右辺は画面の外へ、下辺は写真の下端にそろえて隠す。
   // ★ x を小さくすると右辺の切り口が、y を上げると下辺の切り口が見えるので注意
-  { id: "girl-front", area: "photo", x: 79, y: 0, width: 24 },
+  { id: "girl-front", area: "photo", x: 81, y: 0, width: 22 },
   // 左辺と下辺が断ち切られている。左辺は画面の外へ逃がす。
   // ★ x を 0 に近づけると左辺の切り口が見える
-  { id: "boy-book", area: "photo", x: -2, y: 0, width: 20 },
+  { id: "boy-book", area: "photo", x: -2, y: 0, width: 22 },
   // 輪郭が一周つながっている唯一の1枚。宙に置けるので余白に立たせている。
   // 置き場所が幅で変わるので同じ写真を2件に分けている（出る幅が重ならないので同時には出ない）。
   // タブレット（768〜1023px）：サブコピーの右
-  { id: "boy-board", area: "copy", x: 69.42, y: -29, width: 18 },
+  { id: "boy-board", area: "copy", x: 69.42, y: -29, width: 24 },
   // スマホ（〜767px）：見出し1行目の右。
   // ★ 幅の上限は「見出しの上余白（hero.tsx の pt-20＝80px）」で決まる。超えると
   //   切り抜きの頭がヘッダー（同じ黄色・z-50）の裏に潜って切れて見える。
   //   枠の幅は画面幅なりに伸びるのに、上下の余白は文字サイズでしか増えないので、
   //   いちばん厳しいのは 600px 付近（文字は 40px のまま枠だけ広がる）。
-  //   80px の余白なら 22% が上限。これ以上大きくしたいときは pt-20 も一緒に増やす。
+  //   % のままだと広い端末で頭が潜るので、hero.tsx 側で 88px の上限を掛けている。
+  //   さらに大きくしたいときは、その上限と hero.tsx の pt-14 を一緒に増やす。
   // y は「枠の下から 58px」＝1行目の下端。下げると2行目（右の余白は 7〜22px）に乗る
-  { id: "boy-board", area: "headline", x: 77, y: 58, width: 22 },
+  { id: "boy-board", area: "headline", x: 78, y: 58, width: 24 },
 ];
 
 /** 1023px 以下のダイカットを CSS に変換する。FV 本体と編集画面のつまみで共用する */

@@ -14,7 +14,7 @@ const caseParagraphs = [
 
 export function Changes() {
   return (
-    <section id="changes" className="scroll-mt-24 bg-ivory py-12 lg:py-16">
+    <section id="changes" className="scroll-mt-24 bg-ivory py-10 lg:py-16">
       <Wrap>
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-14">
           <div>

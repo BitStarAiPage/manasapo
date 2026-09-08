@@ -13,7 +13,7 @@ import { Wrap } from "@/components/ui/wrap";
  */
 export function InquirySocial() {
   return (
-    <section className="bg-white py-12 lg:py-16">
+    <section className="bg-white py-10 lg:py-16">
       <Wrap>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
           <div

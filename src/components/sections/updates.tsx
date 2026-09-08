@@ -8,7 +8,7 @@ const instagram = socialLinks[0];
 
 export function Updates() {
   return (
-    <section id="updates" className="bg-white py-10 lg:py-14">
+    <section id="updates" className="bg-white py-8 lg:py-14">
       <Wrap>
         <div className="grid gap-8 lg:grid-cols-[auto_1fr_auto] lg:items-start lg:gap-12">
           <div className="lg:pt-2">
