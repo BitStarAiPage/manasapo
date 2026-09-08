@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Media } from "@/content/media";
+import { PersonMarkInCircle } from "@/components/ui/person-mark";
 
 /**
  * 「白い円の中から人物が立体的に飛び出す」表現。講師紹介と FV のバッジで共用する。
@@ -52,15 +53,44 @@ export function StaffAvatar({
    */
   popoutClip?: number;
 }) {
-  const person = (
+  // 写真が未支給のあいだは人型のシルエットに置き換える。
+  // 「円から人が出ている」表現はこの塾の見せ方の要なので、枠だけにせず頭を出す。
+  // シルエットは実写真と違い、円との位置関係を自分で持っている（PersonMarkInCircle の
+  // viewBox が「円＋上の余白」ぶんある）ので、写真用の PERSON_BOX は使わない。
+  const person = media.src ? (
     <Image
-      src={media.src!}
+      src={media.src}
       alt={media.alt}
       fill
       sizes={sizes}
       className="object-contain object-bottom"
     />
-  );
+  ) : null;
+
+  // 写真が未支給のときの枠。円の中で切る層と、円から出る頭の層に分けるのは実写真と同じ。
+  // 切り取りの位置（上から 30%）は、頭の切り口が円の内側に収まる深さで決めている。
+  if (!media.src) {
+    return (
+      <div className="overflow-visible pt-[15%]">
+        <div className="relative">
+          <div className="relative aspect-square overflow-hidden rounded-full border-2 border-dashed border-mint-deep bg-white">
+            <div className="absolute inset-x-0 top-[-15%] bottom-0">
+              <PersonMarkInCircle />
+            </div>
+          </div>
+
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10">
+            <div
+              className="absolute inset-x-0 top-[-15%] bottom-0"
+              style={{ clipPath: "inset(0 0 70% 0)" }}
+            >
+              <PersonMarkInCircle />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     // 飛び出す頭のぶんだけ上に余白を取り、カード上部で切れないようにする
@@ -74,7 +104,13 @@ export function StaffAvatar({
         {/* 2. 円から飛び出す部分。1 と同じ位置・サイズで重ね、下側を隠す */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10">
           <div className={PERSON_BOX} style={{ clipPath: `inset(0 0 ${100 - popoutClip}% 0)` }}>
-            <Image src={media.src!} alt="" fill sizes={sizes} className="object-contain object-bottom" />
+            <Image
+              src={media.src!}
+              alt=""
+              fill
+              sizes={sizes}
+              className="object-contain object-bottom"
+            />
           </div>
         </div>
       </div>

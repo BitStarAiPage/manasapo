@@ -1,5 +1,4 @@
 import { media } from "@/content/media";
-import { socialLinks } from "@/content/site";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -14,7 +13,9 @@ export function Message() {
   return (
     <section className="bg-white py-12 lg:py-16">
       <Wrap>
-        <div className="grid gap-14 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+        {/* もとは右カラムに「探究学習コーディネート事業」と SNS を並べていたが、
+            どちらも独立したセクションへ切り出したので1カラムにしている */}
+        <div>
           {/* お問い合わせフォームの「ご質問等」も name="message" を使うため、
               id が重複しないよう owner-message にしている（重複すると label と入力欄の
               ひも付けが切れ、ラベルを押しても入力欄にフォーカスが移らない） */}
@@ -40,80 +41,8 @@ export function Message() {
               />
             </div>
           </div>
-
-          <div className="space-y-10">
-            <div
-              id="inquiry-learning"
-              className="scroll-mt-24 rounded-xl border-2 border-mint-deep bg-mint px-6 py-8 text-center"
-            >
-              <h2 className="text-base sm:text-lg">探究学習コーディネート事業</h2>
-              <p className="mt-3 text-2xl font-black tracking-[0.35em] sm:text-3xl">準備中</p>
-            </div>
-
-            <div id="social" className="scroll-mt-24">
-              <h2 className="text-xl sm:text-2xl leading-[1.25] tracking-[0.03em]">まなサポを、もっと知る</h2>
-              <ul className="mt-5 grid grid-cols-3 gap-3">
-                {socialLinks.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex h-full flex-col items-center justify-start gap-2 rounded-xl border-2 border-ink/10 px-2 py-4 text-center transition-colors hover:border-ink"
-                    >
-                      <SocialIcon name={link.name} />
-                      <span className="text-xs font-bold sm:text-sm">{link.name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </div>
       </Wrap>
     </section>
-  );
-}
-
-function SocialIcon({ name }: { name: string }) {
-  if (name === "Instagram") {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-8 w-8">
-        <rect
-          x="2.5"
-          y="2.5"
-          width="19"
-          height="19"
-          rx="5.5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-        <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" strokeWidth="2" />
-        <circle cx="17.6" cy="6.4" r="1.4" fill="currentColor" />
-      </svg>
-    );
-  }
-
-  if (name === "YouTube") {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-8 w-8">
-        <rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="currentColor" />
-        <path d="M10 9.2l5.2 2.8L10 14.8V9.2z" fill="#ffffff" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-8 w-8">
-      <rect x="8.75" y="2" width="6.5" height="12" rx="3.25" fill="currentColor" />
-      <path
-        d="M5 11.5a7 7 0 0 0 14 0M12 18.5V22"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }

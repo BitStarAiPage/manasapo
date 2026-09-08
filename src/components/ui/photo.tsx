@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Media } from "@/content/media";
+import { PersonMark } from "@/components/ui/person-mark";
 import { cn } from "@/lib/cn";
 
 type PhotoProps = {
@@ -47,6 +48,7 @@ export function Photo({
         <PhotoPlaceholder
           label={showLabel ? media.label : undefined}
           align={stretch ? "bottom" : "center"}
+          kind={media.placeholder}
         />
       )}
     </div>
@@ -57,17 +59,21 @@ export function Photo({
 function PhotoPlaceholder({
   label,
   align = "center",
+  kind,
 }: {
   label?: string;
   align?: "center" | "bottom";
+  /** "person" のときは人型のシルエットを出す */
+  kind?: "person";
 }) {
   return (
     <div
       className={cn(
-        "absolute inset-0 flex flex-col items-center gap-1 border-2 border-dashed border-mint-deep bg-mint px-4 text-center",
+        "absolute inset-0 flex flex-col items-center gap-2 border-2 border-dashed border-mint-deep bg-mint px-4 text-center",
         align === "bottom" ? "justify-end pb-14" : "justify-center",
       )}
     >
+      {kind === "person" && <PersonMark />}
       {label && <span className="text-sm font-bold text-ink-soft">{label}</span>}
       <span className="text-xs text-ink-soft/70">写真準備中</span>
     </div>

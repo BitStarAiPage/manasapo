@@ -22,7 +22,6 @@
  *   - staff/*.webp, students/*.webp … 講師・生徒の切り抜き
  *   - updates-room.png / updates-study.png / updates-event.png … 最近のまなサポ
  *   - access-classroom.png … 教室・アクセス
- *   - message-lesson.png … 塾に込めた思い
  *   - course-junior.png / course-senior.png … コース紹介
  *   - feature-lesson / feature-method / feature-team / feature-ski.png … まなサポの特徴
  *   - changes-case01.png … 生徒の変化 CASE 01
@@ -41,6 +40,12 @@ export type Media = {
   /** CSS の aspect-ratio 値（例: "4 / 3"） */
   ratio: string;
   focus?: string;
+  /**
+   * `src` が無いときに出す枠の種類。
+   * - 省略   … 「写真準備中」の点線枠
+   * - "person" … 人型のシルエット。人物写真の支給待ちだと一目で分かるようにする
+   */
+  placeholder?: "person";
 };
 
 type MediaKey =
@@ -105,19 +110,16 @@ export const media: Record<MediaKey, Media> = {
     ratio: "4 / 3",
   },
   /**
-   * コース紹介の2枚。2026-09-08 支給の AI 生成画像（ChatGPT）。実在の講師・生徒ではありません。
-   * 元画像は 2.2:1 の横長で、枠の 3/2 より横に広いので左右が切れる。
-   * 中央に人物が寄っているので focus は既定（中央）のままでよい。
+   * コース紹介の2枚。AI 生成画像を置いていたが、実在の講師・生徒だと誤解されるため
+   * 2026-09-08 に枠だけに戻した（画像は public/images/course-*.png に残してある）。
    */
   courseJunior: {
-    src: "/images/course-junior.png",
-    alt: "教材を指しながら小学生と中学生に説明する講師",
+    alt: "小・中学生への個別指導の様子",
     label: "小・中学生への指導写真",
     ratio: "3 / 2",
   },
   courseSenior: {
-    src: "/images/course-senior.png",
-    alt: "ノートを見せ合いながら学習する高校生3人",
+    alt: "高校生が学習している様子",
     label: "高校生の学習写真",
     ratio: "3 / 2",
   },
@@ -140,14 +142,16 @@ export const media: Record<MediaKey, Media> = {
   },
   /**
    * 「塾に込めた思い（"学ぶ力"は"生きる力"！）」に添える写真。
-   * 瀬尾さんご本人の写真は未支給のため、指導の場面を当てている。
-   * 2026-09-08 支給の AI 生成画像（ChatGPT）。元画像 1470x1070 で枠の 4/3 とほぼ同じ比率。
+   *
+   * ★ 瀬尾さんご本人の写真は未支給。ここに AI 生成の指導カットを置くと
+   *   ご本人の写真だと誤解されるため、人型の空欄にしている。
+   *   写真が届いたら `src` を入れるだけで表示に切り替わる。
    */
   message: {
-    src: "/images/message-lesson.png",
-    alt: "答案を指しながら生徒に説明する講師",
-    label: "瀬尾さん、または教室の写真",
+    alt: "瀬尾さんの写真",
+    label: "瀬尾さんの写真",
     ratio: "4 / 3",
+    placeholder: "person",
   },
   /**
    * 教室・アクセスの写真。教室全体が入る引きのカットにしている
@@ -166,14 +170,14 @@ export const media: Record<MediaKey, Media> = {
 };
 
 /**
- * FV 右の写真パネルで順に切り替える写真。
- * 1枚目が最初に出るもので、以降を数秒ごとにクロスフェードします。
- * 増減はこの配列だけで完結します（1枚にすれば切り替えは止まります）。
+ * FV の写真パネル。配列に2枚以上入れると数秒ごとにクロスフェードしますが、
+ * 2026-09-08 のユーザー指示で **1枚だけ** にしています（切り替えは止まります）。
+ * 増減はこの配列だけで完結します。
  *
- * ★ どちらも AI 生成画像（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
+ * ★ AI 生成画像（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
+ *   もう1枚の候補は `media.heroMain`（/images/hero-lesson-three.webp）です。
  */
 export const heroPanelPhotos: Media[] = [
-  media.heroMain,
   {
     src: "/images/hero-teacher-student.jpg",
     alt: "参考書を開いて生徒に説明する講師",
@@ -220,34 +224,30 @@ export const updateMedia: Media[] = [
 /**
  * 「まなサポの特徴」01〜04 に添える写真。並び順は `src/content/features.ts` と対応する。
  *
- * ★ 4枚とも 2026-09-08 支給の AI 生成画像（ChatGPT）。実在の講師・生徒ではありません。
- *   元画像はすべて 1448x1086（＝4:3）で枠の比率と一致するため、切れる部分はない。
+ * AI 生成画像を置いていたが、実在の講師・生徒だと誤解されるため
+ * 2026-09-08 に枠だけに戻した（画像は public/images/feature-*.png に残してある）。
  */
 export const featureMedia: Media[] = [
   {
     // 01 学びの土台となる「基本」を盤石にする（最大1対2の個別指導）
-    src: "/images/feature-lesson.png",
     alt: "教科書を指しながら2人の生徒に説明する講師",
     label: "個別指導の写真",
     ratio: "4 / 3",
   },
   {
     // 02 一人ひとりに合う「学び方」を一緒につくる
-    src: "/images/feature-method.png",
     alt: "ホワイトボードに書いた考えを講師に説明する生徒",
     label: "勉強法の相談の写真",
     ratio: "4 / 3",
   },
   {
     // 03 担当講師＋チームまなサポ全員でサポート
-    src: "/images/feature-team.png",
     alt: "1人の生徒のノートを2人のスタッフが一緒に見ている場面",
     label: "スタッフ連携の写真",
     ratio: "4 / 3",
   },
   {
     // 04 塾の中だけで終わらない、学びと挑戦をつくる（スキー合宿）
-    src: "/images/feature-ski.png",
     alt: "ゲレンデでスキーブーツの留め具を直してもらう生徒たち",
     label: "教室外の活動の写真",
     ratio: "4 / 3",

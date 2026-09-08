@@ -31,9 +31,7 @@ export function Contact() {
           </div>
 
           <div className="rounded-xl bg-white p-6 sm:p-8 lg:p-10">
-            <p className="text-sm font-bold text-ink-soft">※ 必須項目</p>
-
-            <form onSubmit={handleSubmit} className="mt-5 grid gap-6 sm:grid-cols-2">
+            <form onSubmit={handleSubmit} className="grid gap-6 sm:grid-cols-2">
               <Field label="お名前（保護者）" name="parentName" required autoComplete="name" />
               <Field label="お名前（お子さま）" name="childName" required />
               <Field

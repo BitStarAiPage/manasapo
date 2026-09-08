@@ -6,6 +6,7 @@ import { Features } from "@/components/sections/features";
 import { People } from "@/components/sections/people";
 import { Changes } from "@/components/sections/changes";
 import { Message } from "@/components/sections/message";
+import { InquirySocial } from "@/components/sections/inquiry-social";
 import { Access } from "@/components/sections/access";
 import { Contact } from "@/components/sections/contact";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <People />
       <Changes />
       <Message />
+      <InquirySocial />
       <Access />
       <Contact />
     </>

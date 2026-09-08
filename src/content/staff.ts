@@ -29,12 +29,13 @@ export const staffPlaceholderCount = 4;
  * 顔写真だけ先に支給されている状態のための一覧。
  * 氏名・指導科目・趣味・メッセージが揃ったら `staff` に移してください。
  *
- * ★ これらは AI 生成の人物画像（ChatGPT）で、実在の講師・スタッフではありません。
- * `public/images/staff/` に、人物の高さを揃えて書き出し直したものを置いています。
+ * AI 生成の人物画像を置いていたが、実在の講師・スタッフだと誤解されるため
+ * 2026-09-08 に枠だけに戻した（画像は `public/images/staff/` に残してある）。
+ * `src` を書き戻せばそのまま表示に切り替わる。
  */
 export const staffPlaceholderPhotos: Media[] = [
-  { src: "/images/staff/staff-01.webp", alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
-  { src: "/images/staff/staff-02.webp", alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
-  { src: "/images/staff/staff-03.webp", alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
-  { src: "/images/staff/staff-04.webp", alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
+  { alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
+  { alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
+  { alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
+  { alt: "講師・スタッフ", label: "講師・スタッフの写真", ratio: "24 / 25" },
 ];
