@@ -21,8 +21,13 @@ export function Changes() {
             <h2 className="text-[2.5rem] sm:text-5xl lg:text-6xl leading-[1.25] tracking-[0.03em]">生徒の変化</h2>
             <p className="mt-6 max-w-[38rem] text-base leading-[1.95] sm:text-lg">{intro}</p>
 
+            {/* スマホは幅が足りず中途半端な位置で折り返すので、「CASE 01」で改行させる。
+                640px 以上は1行に収まるので、全角スペースを挟んで元どおり続ける。
+                文言そのものは CONTENT.md のまま変えていない */}
             <h3 className="mt-10 text-lg sm:text-xl">
-              CASE 01　4年間続く、テスト前の「呪い」勉強法
+              <span className="block sm:inline">CASE 01</span>
+              <span className="hidden sm:inline">　</span>
+              4年間続く、テスト前の「呪い」勉強法
             </h3>
             <div className="mt-4 max-w-[38rem] space-y-4">
               {caseParagraphs.map((text) => (
