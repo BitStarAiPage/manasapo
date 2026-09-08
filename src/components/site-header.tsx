@@ -87,9 +87,9 @@ export function SiteHeader() {
 
       {open && (
         <div id="mobile-menu" className="border-t-2 border-ink/10 bg-sun lg:hidden">
+          {/* キャッチコピーはヘッダーに常時出ているので、ここには重ねて置かない */}
           <Wrap className="py-5">
-            <p className="text-xs font-bold">{site.tagline}</p>
-            <ul className="mt-4 flex flex-col gap-1">
+            <ul className="flex flex-col gap-1">
               {nav.map((item) => (
                 <li key={item.href}>
                   <a href={item.href} onClick={close} className="block py-3 text-base font-bold">
