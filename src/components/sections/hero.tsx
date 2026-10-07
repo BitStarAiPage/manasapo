@@ -62,7 +62,7 @@ export const heroCutouts: Record<
   },
   "boy-book": {
     media: heroBadgeMedia[1],
-    label: "男の子（受験本）",
+    label: "男の子（手を振る）",
     sizes: "(min-width: 1024px) 10vw, 1vw",
     layer: "z-20",
     visibility: "hidden lg:block",
@@ -71,7 +71,7 @@ export const heroCutouts: Record<
   },
   "boy-board": {
     media: heroBadgeMedia[0],
-    label: "男の子（ボード）",
+    label: "男の子（書き物）",
     sizes: "(min-width: 1024px) 10vw, 1vw",
     layer: "z-20",
     // この1枚だけ PC 限定。見出しと写真パネルの間に置く決まりなのに、
@@ -97,12 +97,12 @@ export const heroNarrowCutouts: Record<
   },
   "boy-book": {
     media: heroBadgeMedia[1],
-    label: "男の子（受験本）",
+    label: "男の子（手を振る）",
     sizes: "(max-width: 1023px) 20vw, 1vw",
   },
   "boy-board": {
     media: heroBadgeMedia[0],
-    label: "男の子（ボード）",
+    label: "男の子（書き物）",
     sizes: "(max-width: 1023px) 18vw, 1vw",
   },
 };
@@ -278,8 +278,8 @@ export function Hero({
           </div>
 
           {/* タブレット：サブコピー右の余白に立たせる1枚。
-                ここに置けるのは輪郭が一周つながっている student-01 だけ。
-                女の子（student-04）と受験本の男の子（student-02）は辺が断ち切られていて、
+                ここに置けるのは輪郭が一周つながっている「書き物」の男の子だけ。
+                女の子と手を振る男の子は辺が断ち切られていて、
                 画面の外か写真の縁でしか切り口を隠せないので、上の写真の上に置いている。 */}
           <div
             data-cutout-area="copy"

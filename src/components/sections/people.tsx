@@ -1,10 +1,10 @@
-import { staff, staffPlaceholderPhotos, staffProfileItems } from "@/content/staff";
+import { STAFF_POPOUT_CLIP, staff } from "@/content/staff";
 import { REVEAL_STAGGER_MS, floatStyle, revealStyle } from "@/lib/reveal";
 import { StaffAvatar } from "@/components/ui/staff-avatar";
 import { Wrap } from "@/components/ui/wrap";
 
 /**
- * アバターの登場。4つ並ぶので 120ms ずつずらして順に出す。
+ * アバターの登場。並んだ順に 120ms ずつずらして出す。
  * 真下からだけ動かす理由は呼び出し側のコメントを参照。
  */
 const avatarReveal = (index: number) => ({
@@ -51,59 +51,47 @@ export function People() {
             <span className="lg:block">人たち</span>
           </h2>
 
-          {staff.length > 0 ? (
-            // 頭が上に出るぶん、行間（gap-y）を横より広く取って隣の行と衝突させない
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
-              {staff.map((person, index) => (
-                <li key={person.name}>
-                  {/* 横には振らない。円から頭が飛び出す作りの都合で要素が枠の外まで
-                      広がっているため、左右に動かすと画面の外へ出て横スクロールが増える */}
+          {/* 9人いるので、PC は3列×3段にそろえる（4列だと最後の段に1人だけ残る）。
+              頭が上に出るぶん、行間（gap-y）を横より広く取って隣の行と衝突させない */}
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:gap-x-10 lg:gap-y-14">
+            {staff.map((person, index) => (
+              <li key={person.name}>
+                {/* 横には振らない。円から頭が飛び出す作りの都合で要素が枠の外まで
+                    広がっているため、左右に動かすと画面の外へ出て横スクロールが増える */}
+                <div className="max-w-[15rem]">
                   <div data-reveal="" style={revealStyle(avatarReveal(index))}>
                     <div className="float-slow" style={avatarFloat(index)}>
-                      <StaffAvatar media={person.photo} />
+                      <StaffAvatar media={person.photo} popoutClip={STAFF_POPOUT_CLIP} />
                     </div>
                   </div>
-                  <p className="mt-4 text-lg font-black">{person.name}</p>
-                  <dl className="mt-2 space-y-1 text-sm">
-                    <div>
-                      <dt className="inline font-bold">指導科目：</dt>
-                      <dd className="inline">{person.subjects}</dd>
-                    </div>
+                </div>
+                <p className="mt-4 text-lg font-black">
+                  {person.name}
+                  {person.role && (
+                    <span className="mt-0.5 block text-sm font-bold">{person.role}</span>
+                  )}
+                </p>
+                <dl className="mt-2 space-y-1 text-sm">
+                  <div>
+                    <dt className="inline font-bold">指導科目：</dt>
+                    <dd className="inline">{person.subjects}</dd>
+                  </div>
+                  {person.hobby && (
                     <div>
                       <dt className="inline font-bold">趣味・マイブーム：</dt>
                       <dd className="inline">{person.hobby}</dd>
                     </div>
+                  )}
+                  {person.message && (
                     <div>
                       <dt className="font-bold">生徒へのメッセージ</dt>
                       <dd className="leading-[1.8]">{person.message}</dd>
                     </div>
-                  </dl>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>
-              <p className="text-base leading-[1.9] font-bold sm:text-lg">
-                講師・スタッフの紹介は準備中です。
-              </p>
-              <p className="mt-2 text-base leading-[1.9]">
-                公開時には、次の内容を掲載する予定です：
-                {staffProfileItems.join("／")}
-              </p>
-              <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
-                {staffPlaceholderPhotos.map((photo, index) => (
-                  <li key={index}>
-                    <div data-reveal="" style={revealStyle(avatarReveal(index))}>
-                      <div className="float-slow" style={avatarFloat(index)}>
-                        <StaffAvatar media={photo} />
-                      </div>
-                    </div>
-                    <p className="mt-4 text-sm font-bold text-ink-soft">お名前・プロフィール準備中</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                  )}
+                </dl>
+              </li>
+            ))}
+          </ul>
         </div>
       </Wrap>
     </section>

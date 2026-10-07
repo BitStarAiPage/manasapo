@@ -30,7 +30,11 @@ export function Photo({
 }: PhotoProps) {
   return (
     <div
-      className={cn("relative overflow-hidden rounded-xl bg-mint", className)}
+      className={cn(
+        "relative overflow-hidden rounded-xl",
+        media.src && media.fit === "contain" ? "bg-white" : "bg-mint",
+        className,
+      )}
       style={stretch ? undefined : { aspectRatio: media.ratio }}
     >
       {media.src ? (
@@ -41,7 +45,7 @@ export function Photo({
           sizes={sizes}
           loading={preload ? "eager" : "lazy"}
           fetchPriority={preload ? "high" : undefined}
-          className="object-cover"
+          className={media.fit === "contain" ? "object-contain" : "object-cover"}
           style={media.focus ? { objectPosition: media.focus } : undefined}
         />
       ) : (

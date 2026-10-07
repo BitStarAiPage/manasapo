@@ -50,9 +50,6 @@ export function Updates() {
           </a>
         </div>
 
-        <p className="mt-8 text-sm text-ink-soft">
-          投稿の写真・本文・日付は準備中です。最新の様子はInstagramでご覧いただけます。
-        </p>
       </Wrap>
     </section>
   );

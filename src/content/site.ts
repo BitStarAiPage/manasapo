@@ -1,17 +1,27 @@
 export const site = {
   name: "まなサポ",
   logoAlt: "まなサポ PRIVATE CLASS",
-  tagline: "小学生・中学生・高校生の学習塾",
+  /**
+   * ロゴ横（ヘッダー・フッター）とページタイトルに出すキャッチ。
+   * ロゴ横では後ろに `name` を続けて「学び抜く力をつける個別指導塾 まなサポ」と表示する
+   * （2026-10 の修正指示）。タイトルは「まなサポ｜〜」になるので name を重ねない。
+   */
+  tagline: "学び抜く力をつける個別指導塾",
   catchphrase: "「教わる」から、「自分で学べる」へ。",
   description:
     "北海道岩見沢市の学習塾まなサポ。最大1対2の個別指導で基本を固め、一人ひとりに合った「学び方」を一緒につくります。小学生・中学生・高校生対象。無料体験受付中。",
 } as const;
 
+/**
+ * ヘッダーのメニュー。`/` から始めているのは、トップ以外のページ（/inquiry-learning など）
+ * からもトップの各セクションへ飛べるようにするため。トップ上では同じページ内のスクロールになる。
+ */
 export const nav = [
-  { label: "まなサポについて", href: "#philosophy" },
-  { label: "コース紹介", href: "#courses" },
-  { label: "まなサポの人たち", href: "#people" },
-  { label: "アクセス", href: "#access" },
+  { label: "コース紹介", href: "/#courses" },
+  { label: "特徴", href: "/#features" },
+  { label: "まなサポの人たち", href: "/#people" },
+  { label: "生徒の変化", href: "/#changes" },
+  { label: "アクセス", href: "/#access" },
 ] as const;
 
 export const access = {

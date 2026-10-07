@@ -1,32 +1,35 @@
+import Link from "next/link";
 import { socialLinks } from "@/content/site";
 import { Wrap } from "@/components/ui/wrap";
 
 /**
- * 「探究学習コーディネート事業」と「まなサポを、もっと知る」を横並びで置くセクション。
+ * 「探究学習事業」と「まなサポを、もっと知る」を横並びで置くセクション。
  *
  * どちらも中身が少ないので、1本ずつのセクションにすると帯だけが続いて間延びする。
  * PC は2カラム、1023px 以下は縦積み。
  *
- * 探究学習は内容が未支給なので「準備中」だけを出す。事業名と「準備中」以外の文言は
- * CONTENT.md に無いため補わない（架空のサービス内容を書かないための方針）。
- * 本文が届いたら左側に段落を足すだけで済む。
+ * 探究学習は内容が未支給。2026-10 の修正指示で、カード上の「準備中」ボタンを外し、
+ * カードを押すと別ページ（/inquiry-learning）に移って「準備中」と出す形にした
+ * （今後、内容が厚くなる予定とのこと）。本文が届いたらそのページに書き足す。
  */
 export function InquirySocial() {
   return (
     <section className="bg-white py-10 lg:py-16">
       <Wrap>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
-          <div
+          <Link
             id="inquiry-learning"
-            className="flex scroll-mt-24 flex-col items-center justify-center gap-5 rounded-xl border-2 border-mint-deep bg-mint px-6 py-10 text-center"
+            href="/inquiry-learning"
+            className="group flex scroll-mt-24 items-center justify-center gap-3 rounded-xl border-2 border-mint-deep bg-mint px-6 py-10 text-center transition-colors hover:border-ink"
           >
-            <h2 className="text-xl leading-[1.25] tracking-[0.03em] sm:text-2xl">
-              探究学習コーディネート事業
-            </h2>
-            <p className="rounded-full border-2 border-ink px-8 py-2.5 text-lg font-black tracking-[0.35em] sm:text-xl">
-              準備中
-            </p>
-          </div>
+            <h2 className="text-xl leading-[1.25] tracking-[0.03em] sm:text-2xl">探究学習事業</h2>
+            <span
+              aria-hidden="true"
+              className="text-xl font-bold transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
 
           <div id="social" className="scroll-mt-24 lg:flex lg:flex-col lg:justify-center">
             <h2 className="text-xl leading-[1.25] tracking-[0.03em] sm:text-2xl">
