@@ -67,7 +67,6 @@ type MediaKey =
   | "courseJunior"
   | "courseSenior"
   | "case01"
-  | "message"
   | "classroom";
 
 export const media: Record<MediaKey, Media> = {
@@ -102,10 +101,10 @@ export const media: Record<MediaKey, Media> = {
    * ★ この置き方が前提の写真なので、動かすときは切り口が出ないか必ず確認すること。
    */
   heroCutoutRight: {
-    src: "/images/photos/hero-girl-drink.webp",
-    alt: "缶ジュースを手に笑う生徒",
+    src: "/images/students/student-04.webp",
+    alt: "ポーズをとる生徒",
     label: "切り抜き写真（透過PNG）",
-    ratio: "1000 / 1139",
+    ratio: "1080 / 1031",
   },
   heroWhiteboard: {
     src: "/images/from-current-site/group-study.jpg",
@@ -144,29 +143,16 @@ export const media: Record<MediaKey, Media> = {
     focus: "50% 42%",
   },
   /**
-   * 「生徒の変化」の写真。支給写真「自習の様子」。
-   * 元画像は 1350x1800 の縦長で、3/2 の枠には高さの 50% しか入らない。
-   * 顔から手元のノートまでが残る位置に寄せている。
+   * 「生徒の変化」の写真。2026-10-15 支給の「IMG_0516」（ホワイトボードに書き込む生徒）。
+   * 同じ生徒が複数の写真に出るのを避けたいとのことで「自習の様子」（changes-case01.jpg）から差し替えた。
+   * 元画像は 4:3 の横長で、3/2 の枠では上下が少し切れるだけ。顔とペン先が残る位置に寄せている。
    */
   case01: {
-    src: "/images/photos/changes-case01.jpg",
-    alt: "机に向かってノートに書き込む生徒",
-    label: "自習する生徒の写真",
+    src: "/images/photos/changes-case01-whiteboard.jpg",
+    alt: "ホワイトボードにマーカーで書き込む生徒",
+    label: "ホワイトボードに書く生徒の写真",
     ratio: "3 / 2",
-    focus: "50% 52%",
-  },
-  /**
-   * 「塾に込めた思い（"学ぶ力"は"生きる力"！）」に添える写真。
-   *
-   * ★ 瀬尾さんご本人の写真は未支給。ここに AI 生成の指導カットを置くと
-   *   ご本人の写真だと誤解されるため、人型の空欄にしている。
-   *   写真が届いたら `src` を入れるだけで表示に切り替わる。
-   */
-  message: {
-    alt: "瀬尾さんの写真",
-    label: "瀬尾さんの写真",
-    ratio: "4 / 3",
-    placeholder: "person",
+    focus: "50% 45%",
   },
   /**
    * 教室・アクセスの写真。教室全体が入る引きのカットにしている
@@ -331,33 +317,29 @@ export const heroAltCutouts: Media[] = [
  * 頭は円の上端から出て、顔から下は円の中に収まる。
  */
 /**
- * ★ 現在 FV に置いているのは 0・1 の2枚（どちらも男の子・2026-10 支給の実写真）です。
+ * ★ 現在 FV に置いているのは 0・1 の2枚（どちらも男の子）です。
  *   2（student-03）は未使用ですが、輪郭が一周つながっている扱いやすい一枚なので残しています。
  *   ダイカットは見出しやリード文にかぶらない位置にだけ置く方針なので、
  *   増やすときは置き場所の余白があるか `/fv-editor` で確かめてください。
  */
 export const heroBadgeMedia: (Media & { popoutClip: number })[] = [
   /**
-   * ★ 2026-10 に FV の切り抜きを支給写真に差し替えた（下の2枚＋ heroCutoutRight）。
-   *   どれも机に向かう場面を切り抜いたもので、断ち切られている辺が違う。置き場所はそれに合わせている：
-   *   - 0: IMG_6807（書き物をする生徒）… 右辺（背中）が断ち切りだったので、楕円で丸めて輪郭にした。
-   *        一周つながっているので、宙に置ける「男の子（ボード）」の枠に入れている
-   *   - 1: 自習中の様子（手を振る生徒）… 左辺と下辺が断ち切り。左端の画面外へ逃がす枠に入れている
-   *   これで指示書の並び（IMG_6807／自習中の様子）とは左右が入れ替わっている。
-   *   円入りのバッジ（popoutClip）としては現在使っていない。
+   * ★ 2026-10 に一度支給写真（photos/hero-*.webp）へ差し替えたが、
+   *   2026-10-15 の修正指示（2稿）で前回の版に戻した（heroCutoutRight も同じ）。
+   *   差し替え版の画像は public/images/photos/ に残してある。
    */
   {
-    src: "/images/photos/hero-boy-desk.webp",
-    alt: "ペンを持ってノートに書き込む生徒",
+    src: "/images/students/student-01.webp",
+    alt: "ホワイトボードを持って笑う生徒",
     label: "生徒の切り抜き",
-    ratio: "1000 / 939",
+    ratio: "24 / 25",
     popoutClip: 25,
   },
   {
-    src: "/images/photos/hero-boy-wave.webp",
-    alt: "笑顔で手を振る生徒",
+    src: "/images/students/student-02.webp",
+    alt: "大学受験案内を手にした生徒",
     label: "生徒の切り抜き",
-    ratio: "1000 / 1194",
+    ratio: "24 / 25",
     popoutClip: 25,
   },
   {

@@ -21,6 +21,8 @@ export const nav = [
   { label: "特徴", href: "/#features" },
   { label: "まなサポの人たち", href: "/#people" },
   { label: "生徒の変化", href: "/#changes" },
+  // 講習会だけは別ページ（2026-10-15 の修正指示）
+  { label: "講習会", href: "/seasonal-course" },
   { label: "アクセス", href: "/#access" },
 ] as const;
 

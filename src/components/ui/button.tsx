@@ -5,6 +5,8 @@ const base = "inline-flex items-center justify-center rounded-full font-bold tra
 const sizes = {
   md: "px-6 py-3 text-base sm:px-8 sm:py-4",
   sm: "px-5 py-2.5 text-sm",
+  /** ページの締めなど、いちばん目立たせたい1か所だけに使う */
+  lg: "px-10 py-5 text-lg sm:px-14 sm:py-6 sm:text-xl lg:px-20 lg:text-2xl",
 } as const;
 
 const variants = {

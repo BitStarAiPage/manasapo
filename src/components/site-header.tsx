@@ -31,10 +31,11 @@ export function SiteHeader() {
               1行にするのは 1536px 以上だけ（それ未満はナビとボタンに押されて入らない）。
               文字サイズは 14→16→18→20px と段階的に上げている。410px 未満は 16px にすると
               1行目（14文字＝224px）がロゴとメニューボタンの間に入らず「塾」だけ3行目に落ちる。
+              1024〜1279px は「講習会」を足したナビ（6項目）と並ぶので 16px に戻している。
               `min-w-0` はキャッチが伸びてメニューボタンを押し出さないため */}
           <Link href="/#hero" className="flex min-w-0 items-center gap-3" onClick={close}>
             <Logo className="h-12 w-auto lg:h-16" alt={`${site.name} トップへ`} />
-            <span className="block text-sm leading-snug font-bold min-[410px]:text-base sm:text-lg xl:text-xl">
+            <span className="block text-sm leading-snug font-bold min-[410px]:text-base sm:text-lg lg:text-base xl:text-xl">
               <span className="block 2xl:inline">{site.tagline}</span>
               <span className="hidden 2xl:inline">　</span>
               <span className="block 2xl:inline">{site.name}</span>
@@ -42,10 +43,11 @@ export function SiteHeader() {
           </Link>
 
           <nav aria-label="サイト内メニュー" className="ml-auto hidden lg:block">
-            <ul className="flex items-center gap-5 xl:gap-7">
+            {/* 1024〜1279px は6項目が入りきらず1語ずつ折り返したので、文字と間隔を詰め、折り返しも止めている */}
+            <ul className="flex items-center gap-4 whitespace-nowrap xl:gap-7">
               {nav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-sm font-bold hover:underline xl:text-base">
+                  <a href={item.href} className="text-[0.8125rem] font-bold hover:underline xl:text-base">
                     {item.label}
                   </a>
                 </li>

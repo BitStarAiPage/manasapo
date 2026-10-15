@@ -61,7 +61,11 @@ export function People() {
                 <div className="max-w-[15rem]">
                   <div data-reveal="" style={revealStyle(avatarReveal(index))}>
                     <div className="float-slow" style={avatarFloat(index)}>
-                      <StaffAvatar media={person.photo} popoutClip={STAFF_POPOUT_CLIP} />
+                      <StaffAvatar
+                        media={person.photo}
+                        popoutClip={STAFF_POPOUT_CLIP}
+                        popoutRight={person.popoutRight}
+                      />
                     </div>
                   </div>
                 </div>

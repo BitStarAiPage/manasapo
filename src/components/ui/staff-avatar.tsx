@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { Media } from "@/content/media";
-import { PersonMark } from "@/components/ui/person-mark";
 
 /**
  * 「白い円の中から人物が立体的に飛び出す」表現。講師紹介と FV のバッジで共用する。
@@ -34,6 +33,7 @@ export function StaffAvatar({
   media,
   sizes = "(max-width: 1024px) 45vw, 22vw",
   popoutClip = 70,
+  popoutRight = 0,
   outlined = false,
 }: {
   media: Media;
@@ -52,14 +52,34 @@ export function StaffAvatar({
    * それより浅い値を渡すこと（実測値は content 側のコメントに残してある）。
    */
   popoutClip?: number;
+  /**
+   * 飛び出しレイヤーの右側を何%隠すか。頭と同じ高さで円の外に手などが出ている写真用。
+   * 隠さないと、円の外に腕から切り離された手だけが浮いて見える。
+   */
+  popoutRight?: number;
 }) {
-  // 写真が未支給のときの枠。円の中に人型のシルエットを収める。
-  // 頭を円から出す案も試したが、シルエットだと首だけが伸びて見えるのでやめた。
+  // 写真が無い講師の枠（2026-10-15 の修正指示で「COMING SOON」に）。
+  // 「作り途中」に見えないよう、点線やミントの塗りはやめて写真ありの人と同じ白い円にそろえ、
+  // 線画の人物と文字を淡いグレーで置いている。文字は円の大きさに合わせて伸縮させる（cqw）。
   if (!media.src) {
     return (
       <div className="overflow-visible pt-[15%]">
-        <div className="flex aspect-square items-center justify-center rounded-full border-2 border-dashed border-mint-deep bg-white">
-          <PersonMark className="h-[42%] w-[42%]" />
+        <div className="@container flex aspect-square flex-col items-center justify-center rounded-full bg-white text-ink-soft/45">
+          <svg
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            className="w-[34%]"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          >
+            <circle cx="32" cy="22" r="11" />
+            <path d="M10 58c1.5-12.5 10.5-20 22-20s20.5 7.5 22 20" />
+          </svg>
+          <p className="mt-[5%] text-[clamp(0.625rem,7cqw,0.9rem)] font-bold tracking-[0.22em]">
+            COMING SOON
+          </p>
         </div>
       </div>
     );
@@ -86,7 +106,7 @@ export function StaffAvatar({
 
         {/* 2. 円から飛び出す部分。1 と同じ位置・サイズで重ね、下側を隠す */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10">
-          <div className={PERSON_BOX} style={{ clipPath: `inset(0 0 ${100 - popoutClip}% 0)` }}>
+          <div className={PERSON_BOX} style={{ clipPath: `inset(0 ${popoutRight}% ${100 - popoutClip}% 0)` }}>
             <Image
               src={media.src!}
               alt=""
