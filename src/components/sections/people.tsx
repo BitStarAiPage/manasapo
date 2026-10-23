@@ -42,7 +42,7 @@ export function People() {
   return (
     <section id="people" className="scroll-mt-24 overflow-x-clip bg-sun py-10 lg:py-16">
       <Wrap>
-        <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-14">
+        <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-10">
           {/* PC だけ2行にする。この見出しは `lg:grid-cols-[auto_1fr]` の auto 側にいるので、
               1行のままだと見出しの列が横に伸びてアバターの列が狭くなる。
               1023px 以下は横幅が足りないので1行のまま。 */}
@@ -53,7 +53,9 @@ export function People() {
 
           {/* 9人いるので、PC は3列×3段にそろえる（4列だと最後の段に1人だけ残る）。
               頭が上に出るぶん、行間（gap-y）を横より広く取って隣の行と衝突させない */}
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:gap-x-10 lg:gap-y-14">
+          {/* PC の列の間隔（gap-x）と見出しとの間隔は、1280px で「趣味・マイブーム：…料理」の
+              「料理」だけが次の行に落ちないよう、文字の幅を確保できる値にしている */}
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:gap-x-6 lg:gap-y-14">
             {staff.map((person, index) => (
               <li key={person.name}>
                 {/* 横には振らない。円から頭が飛び出す作りの都合で要素が枠の外まで

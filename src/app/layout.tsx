@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
+import { OrphanFix } from "@/components/ui/orphan-fix";
 import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -13,11 +14,19 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: `${site.name}｜${site.tagline}`,
     template: `%s｜${site.name}`,
   },
   description: site.description,
+  // OGP の画像は src/app/opengraph-image.jpg（ファイルを置くだけで全ページに付く）
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: site.name,
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -44,6 +53,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <RevealOnScroll />
         <SiteHeader />
         <main className="flex-1">{children}</main>
+        {/* 1〜2文字だけ次の行に落ちた文の字間を詰めて、前の行に戻す（POPER の制作ルール） */}
+        <OrphanFix />
         <SiteFooter />
       </body>
     </html>

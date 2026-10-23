@@ -1,5 +1,10 @@
 export const site = {
   name: "まなサポ",
+  /**
+   * 公開先の URL。OGP の画像の絶対 URL・canonical・sitemap・robots・フォーム送信後の戻り先に使う。
+   * 独自ドメインに移ったらここだけ直す
+   */
+  url: "https://manasapo.vercel.app",
   logoAlt: "まなサポ PRIVATE CLASS",
   /**
    * ロゴ横（ヘッダー・フッター）とページタイトルに出すキャッチ。
@@ -36,9 +41,17 @@ export const access = {
   ],
   tel: { label: "080-6134-7257(セノオ)", href: "tel:08061347257" },
   email: {
-    label: "manasapo.iwamizawa@gmail.com",
-    href: "mailto:manasapo.iwamizawa@gmail.com",
+    label: "info@iwa-manasapo.com",
+    href: "mailto:info@iwa-manasapo.com",
   },
+  /**
+   * お問い合わせフォームの送信先（FormSubmit の AJAX 窓口。上の email 宛てに届く）。
+   * ★ 最初の1通を送ると、FormSubmit から info@iwa-manasapo.com に「Activate Form」のメールが届く。
+   *   そのボタンを押すまでは、フォームから送っても届かない（画面には送信エラーと表示される）。
+   */
+  formEndpoint: "https://formsubmit.co/ajax/info@iwa-manasapo.com",
+  /** JavaScript が動かない環境向けの通常送信の窓口。送信後は _next の /thanks へ戻す */
+  formAction: "https://formsubmit.co/info@iwa-manasapo.com",
 } as const;
 
 export const socialLinks = [
@@ -52,7 +65,7 @@ export const socialLinks = [
   },
   {
     name: "音声配信",
-    href: "https://stand.fm/channels/6821e1584d20b5ed88828c33?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAacMF3W7pTCFGW-WkamU6-YIJyWU75VeW-zg-rvxY9H3fRn_yHfgqfrNQEGwrQ_aem_4toBjjCGJGE2-wVgVp8SFg",
+    href: "https://stand.fm/channels/6821e1584d20b5ed88828c33",
   },
 ] as const;
 

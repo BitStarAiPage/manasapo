@@ -4,6 +4,8 @@ import { Wrap } from "@/components/ui/wrap";
 
 export const metadata: Metadata = {
   title: "探究学習事業",
+  description: "北海道岩見沢市の学習塾まなサポの探究学習事業のページです。内容は準備中です。",
+  alternates: { canonical: "/inquiry-learning" },
 };
 
 /**

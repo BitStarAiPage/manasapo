@@ -10,10 +10,12 @@ export function Features() {
         <h2 className="text-[2rem] sm:text-4xl lg:text-5xl leading-[1.25] tracking-[0.03em]">まなサポの特徴</h2>
 
         <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-16">
+          {/* PC は文字の列を広めにしている（1.3 : 0.7）。1.15 : 0.85 だと 1024〜1280px で
+              見出しの末尾1〜2文字（「る」「い、」など）が次の行に落ちた */}
           {features.map((feature, index) => (
             <div
               key={feature.number}
-              className="grid gap-6 sm:grid-cols-[1.15fr_0.85fr] sm:items-start"
+              className="grid gap-6 sm:grid-cols-[1.15fr_0.85fr] sm:items-start lg:grid-cols-[1.3fr_0.7fr] lg:gap-5"
             >
               <div>
                 {/* 番号は leading-none なので箱が数字にぴったり付き、見出しは2行で背が高い。

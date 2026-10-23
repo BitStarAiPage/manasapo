@@ -12,19 +12,14 @@
  *   同じ写真を複数箇所で使い回している状態です。
  *
  * ★ `/images/` 直下の room-*.jpg は 2026-09-04 支給の教室内観（人物なし・実写真）。
- *   トップページでは現在どれも使っていない（生成画像に置き換わったため）。
- *   room-booth だけ別案FV（/alt）で使用。実写真に戻したくなったときの候補として残す。
- *   study-pair / teaching-whiteboard / desk-talk / whiteboard-smile は上記4枚と重複。
+ *   room-booth だけ別案FV（/alt）で使用。ほかは 2026-10-23 に未使用画像として削除した。
  *
  * ★★ 次の画像は AI 生成（ChatGPT）です。まなサポの実際の講師・生徒・教室ではありません。
  *   実写真が届いたら差し替えてください（2026-09-08 にユーザー確認済み）。
- *   - hero-lesson-three.webp / hero-teacher-student.jpg … FV の写真パネル
- *   - staff/*.webp, students/*.webp … 講師・生徒の切り抜き
- *   - updates-room.png / updates-study.png / updates-event.png … 最近のまなサポ
+ *   いま使っているのは次の2枚だけ（ほかは実写真に差し替え済みで、2026-10-23 に削除した）：
+ *   - updates-study.png … 最近のまなサポ（2枚目）
  *   - access-classroom.png … 教室・アクセス
- *   - course-junior.png / course-senior.png … コース紹介
- *   - feature-lesson / feature-method / feature-team / feature-ski.png … まなサポの特徴
- *   - changes-case01.png … 生徒の変化 CASE 01
+ *   別案FV（/alt）の hero-lesson-three.webp なども AI 生成。
  *   alt は「まなサポの〜」と断定せず、写っている場面をそのまま書くこと
  *   （実在の教室・人物だと読み上げてしまわないため）。
  *
@@ -36,7 +31,7 @@
  * ★ 2026-10 に先方から実写真が届き、`/images/photos/` に置いて差し替えた。
  *   元ファイルは「まなサポ様提供画像共有用画像.zip」（HEIC/HEIF）。長辺 1400〜2400px の JPEG に変換している。
  *   FV の切り抜き（hero-*.webp）と講師（staff/*.webp）は macOS の Vision で背景を抜いたもの。
- *   差し替えで使わなくなった AI 生成画像も `/images/` 直下に残してある。
+ *   差し替えで使わなくなった画像は 2026-10-23 に削除した（git の履歴から戻せる）。
  */
 export type Media = {
   src?: string;
@@ -326,7 +321,7 @@ export const heroBadgeMedia: (Media & { popoutClip: number })[] = [
   /**
    * ★ 2026-10 に一度支給写真（photos/hero-*.webp）へ差し替えたが、
    *   2026-10-15 の修正指示（2稿）で前回の版に戻した（heroCutoutRight も同じ）。
-   *   差し替え版の画像は public/images/photos/ に残してある。
+   *   差し替え版の画像は使わなくなったので削除した（git の履歴から戻せる）。
    */
   {
     src: "/images/students/student-01.webp",

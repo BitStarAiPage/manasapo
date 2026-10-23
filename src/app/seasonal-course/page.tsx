@@ -4,6 +4,7 @@ import { Wrap } from "@/components/ui/wrap";
 
 export const metadata: Metadata = {
   title: "夏・冬の講習会",
+  alternates: { canonical: "/seasonal-course" },
   description:
     "まなサポの夏・冬の講習会。科目数・授業数に制限なく、一人ひとりの目標や学習状況に合わせた超オーダーメイドのカリキュラムで受講できます。",
 };

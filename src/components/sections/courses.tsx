@@ -37,7 +37,7 @@ export function Courses() {
                 className="rounded-none"
               />
 
-              <div className="flex flex-1 flex-col p-6 lg:p-8">
+              <div className="flex flex-1 flex-col p-6 max-[419px]:p-5 lg:p-8">
                 <h3 className="text-2xl leading-[1.25] tracking-[0.03em] sm:text-[1.75rem]">
                   {course.title}
                 </h3>
@@ -70,9 +70,11 @@ export function Courses() {
 
                   <div className="pt-6">
                     <h4 className="text-lg font-black">{course.pointsTitle}</h4>
+                    {/* 幅 419px 以下はカードと枠の内側の余白を 4px ずつ詰めて、文字の幅を広げている。
+                        390px で「…ONE TEAM体制」の「体制」だけが次の行に落ちたため */}
                     <ul className="mt-4 space-y-4">
                       {course.points.map((point) => (
-                        <li key={point.title} className="rounded-xl bg-mint/60 p-5">
+                        <li key={point.title} className="rounded-xl bg-mint/60 p-5 max-[419px]:p-4">
                           <p className="font-bold">{point.title}</p>
                           <p className="mt-1 text-base leading-[1.9]">{point.body}</p>
                         </li>

@@ -36,12 +36,14 @@ export function Access() {
             <div>
               <h3 className="text-sm font-black text-ink-soft">住所</h3>
               <p className="mt-1 text-base leading-[1.9]">{access.address}</p>
-              {/* 埋め込み地図とは別に、地図アプリで開ける導線を残す */}
+              {/* 埋め込み地図とは別に、地図アプリで開ける導線を残す。
+                  文字は小さいが、py-3 で押せる範囲を上下に 44px 程度まで広げている
+                  （-my-3 で打ち消しているので見た目の位置は変わらない） */}
               <a
                 href={access.mapUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold hover:underline"
+                className="mt-2 -my-3 inline-flex items-center gap-1.5 py-3 text-sm font-bold hover:underline"
               >
                 {/* 常時ゆっくり浮くのはこのピンだけ。同じセクションに他の装飾は無い */}
                 <svg
