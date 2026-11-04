@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { access, gradeOptions, site } from "@/content/site";
+import { access, FORM_NOTICE_ENABLED, gradeOptions, site } from "@/content/site";
 import { Wrap } from "@/components/ui/wrap";
 
 const fieldClass =
@@ -83,6 +83,7 @@ export function Contact() {
           </div>
 
           <div className="rounded-xl bg-white p-6 sm:p-8 lg:p-10">
+            {FORM_NOTICE_ENABLED && <FormNotice />}
             {/* action / method と hidden の欄は、JavaScript が動かない環境で通常送信になったとき用。
                 そのときも _next でサイト内の /thanks に戻し、FormSubmit の初期サンクスページは出さない */}
             <form
@@ -192,6 +193,29 @@ export function Contact() {
         </div>
       </Wrap>
     </section>
+  );
+}
+
+/** フォームが一時的に使えないときのお知らせ（site.ts の FORM_NOTICE_ENABLED で出し分け） */
+function FormNotice() {
+  // 電話番号は表示用ラベルから「(セノオ)」などの補足を外して載せる
+  const tel = access.tel.label.replace(/[（(].*$/, "");
+  return (
+    <div role="note" className="mb-8 rounded-xl border-2 border-ink bg-sun/40 p-5 leading-[1.9]">
+      <p className="text-base font-bold">お問い合わせフォームについてのお知らせ</p>
+      <p className="mt-2 text-sm sm:text-base">
+        ただいま、お問い合わせフォームからの送信が一時的にご利用いただけない状態となっております。
+        お急ぎの方は、お手数ですがお電話（
+        <a href={access.tel.href} className="font-bold underline">
+          {tel}
+        </a>
+        ）またはメール（
+        <a href={access.email.href} className="font-bold underline break-all">
+          {access.email.label}
+        </a>
+        ）にてご連絡ください。ご不便をおかけし申し訳ございません。
+      </p>
+    </div>
   );
 }
 

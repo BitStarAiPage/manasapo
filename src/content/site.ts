@@ -54,6 +54,13 @@ export const access = {
   formAction: "https://formsubmit.co/info@iwa-manasapo.com",
 } as const;
 
+/**
+ * お問い合わせフォームのお知らせ（一時的に送信できないとき用）。
+ * true のあいだ、フォームの上に「送信が一時的にご利用いただけない」案内と、電話・メールの連絡先を出す。
+ * フォームの送信先が使えるようになったら false にする（お知らせが消えるだけで、ほかは変わらない）。
+ */
+export const FORM_NOTICE_ENABLED = true;
+
 export const socialLinks = [
   {
     name: "Instagram",
