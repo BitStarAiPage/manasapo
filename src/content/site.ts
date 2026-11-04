@@ -45,13 +45,11 @@ export const access = {
     href: "mailto:info@iwa-manasapo.com",
   },
   /**
-   * お問い合わせフォームの送信先（FormSubmit の AJAX 窓口。上の email 宛てに届く）。
-   * ★ 最初の1通を送ると、FormSubmit から info@iwa-manasapo.com に「Activate Form」のメールが届く。
-   *   そのボタンを押すまでは、フォームから送っても届かない（画面には送信エラーと表示される）。
+   * お問い合わせフォームの送信先（Web3Forms。JavaScript が動かない環境の通常送信も同じ窓口）。
+   * アクセスキーに紐づく上の email 宛てに届く。キーは公開してよい値。
    */
-  formEndpoint: "https://formsubmit.co/ajax/info@iwa-manasapo.com",
-  /** JavaScript が動かない環境向けの通常送信の窓口。送信後は _next の /thanks へ戻す */
-  formAction: "https://formsubmit.co/info@iwa-manasapo.com",
+  formEndpoint: "https://api.web3forms.com/submit",
+  formAccessKey: "27194f23-430d-4266-b9f0-8642f5a7832e",
 } as const;
 
 /**
@@ -59,7 +57,7 @@ export const access = {
  * true のあいだ、フォームの上に「送信が一時的にご利用いただけない」案内と、電話・メールの連絡先を出す。
  * フォームの送信先が使えるようになったら false にする（お知らせが消えるだけで、ほかは変わらない）。
  */
-export const FORM_NOTICE_ENABLED = true;
+export const FORM_NOTICE_ENABLED = false;
 
 export const socialLinks = [
   {

@@ -27,8 +27,8 @@ export function Contact() {
   const router = useRouter();
   const [status, setStatus] = useState<Status>("idle");
 
-  // FormSubmit（access.formEndpoint）へ送り、info@iwa-manasapo.com にメールで届ける。
-  // AJAX 窓口に JSON で送るので FormSubmit の初期サンクスページは出ない。
+  // Web3Forms（access.formEndpoint）へ送り、info@iwa-manasapo.com にメールで届ける。
+  // JSON で送るので Web3Forms の初期サンクスページは出ない。
   // 送れたらサイト内の /thanks へ移り、失敗したらフォームの下にエラーを出す。
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,17 +36,17 @@ export function Contact() {
     const data = new FormData(form);
 
     // ロボット除け。人には見えない欄に入力があれば、送ったふりをして終える
-    if (data.get("_honey")) {
+    if (data.get("botcheck")) {
       router.push("/thanks");
       return;
     }
 
     const body: Record<string, string> = {
-      _subject: MAIL_SUBJECT,
-      _template: "table",
-      _captcha: "false",
+      access_key: access.formAccessKey,
+      subject: MAIL_SUBJECT,
+      from_name: site.name,
       // 返信ボタンでお客さまのアドレスに返せるようにする
-      _replyto: String(data.get("email") ?? ""),
+      replyto: String(data.get("email") ?? ""),
     };
     for (const [name, label] of Object.entries(mailLabels)) {
       body[label] = String(data.get(name) ?? "").trim() || "（未入力）";
@@ -59,9 +59,8 @@ export function Contact() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(body),
       });
-      const result = (await response.json().catch(() => null)) as { success?: string | boolean } | null;
-      // FormSubmit は success を文字列（"true" / "false"）で返す
-      if (!response.ok || String(result?.success) !== "true") throw new Error("send failed");
+      const result = (await response.json().catch(() => null)) as { success?: boolean } | null;
+      if (!response.ok || result?.success !== true) throw new Error("send failed");
       router.push("/thanks");
     } catch {
       setStatus("error");
@@ -85,21 +84,21 @@ export function Contact() {
           <div className="rounded-xl bg-white p-6 sm:p-8 lg:p-10">
             {FORM_NOTICE_ENABLED && <FormNotice />}
             {/* action / method と hidden の欄は、JavaScript が動かない環境で通常送信になったとき用。
-                そのときも _next でサイト内の /thanks に戻し、FormSubmit の初期サンクスページは出さない */}
+                そのときも redirect でサイト内の /thanks に戻し、Web3Forms の初期サンクスページは出さない */}
             <form
-              action={access.formAction}
+              action={access.formEndpoint}
               method="POST"
               onSubmit={handleSubmit}
               className="grid gap-6 sm:grid-cols-2"
             >
-              <input type="hidden" name="_subject" value={MAIL_SUBJECT} />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value={`${site.url}/thanks`} />
-              {/* ロボット除けの見えない欄（FormSubmit の _honey）。人は入力しない */}
+              <input type="hidden" name="access_key" value={access.formAccessKey} />
+              <input type="hidden" name="subject" value={MAIL_SUBJECT} />
+              <input type="hidden" name="from_name" value={site.name} />
+              <input type="hidden" name="redirect" value={`${site.url}/thanks`} />
+              {/* ロボット除けの見えない欄（Web3Forms の botcheck）。人は操作しない */}
               <input
-                type="text"
-                name="_honey"
+                type="checkbox"
+                name="botcheck"
                 tabIndex={-1}
                 autoComplete="off"
                 aria-hidden="true"

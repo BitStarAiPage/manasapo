@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * お問い合わせフォームの送信後に移るページ（FormSubmit の初期サンクスページの代わり）。
+ * お問い合わせフォームの送信後に移るページ（Web3Forms の初期サンクスページの代わり）。
  * フォームから送れたときだけ来るページなので、検索には出さず sitemap にも入れない。
  */
 export default function ThanksPage() {
