@@ -27,18 +27,23 @@ export function SiteHeader() {
         {/* モバイルはメニューボタン（56px）が入るので、64px だと上下 4px しか空かない。
             76px にして上下 10px を確保している */}
         <div className="flex h-[4.75rem] items-center gap-4 lg:h-20 lg:gap-6">
-          {/* ロゴ横のキャッチ。1行に入らない幅では「〜個別指導塾／まなサポ」の2行にする。
-              1行にするのは 1536px 以上だけ（それ未満はナビとボタンに押されて入らない）。
-              文字サイズは 14→16→18→20px と段階的に上げている。410px 未満は 16px にすると
-              1行目（14文字＝224px）がロゴとメニューボタンの間に入らず「塾」だけ3行目に落ちる。
-              1024〜1279px は「講習会」を足したナビ（6項目）と並ぶので 16px に戻している。
-              `min-w-0` はキャッチが伸びてメニューボタンを押し出さないため */}
+          {/* ロゴ横は「まなサポ｜学び抜く力をつける個別指導塾　北海道岩見沢」（2026-11-05 の修正指示）。
+              1行に入らない幅では、区切りのよい位置で2行にする：
+                639px 以下 …「まなサポ｜学び抜く力をつける」／「個別指導塾　北海道岩見沢」
+                640px 以上 …「まなサポ｜学び抜く力をつける個別指導塾」／「北海道岩見沢」
+              1024〜1535px はナビ（6項目）と並んで幅が足りないので、639px 以下と同じ区切りにしている
+                （1280px で 640px 以上の区切りにすると「塾」だけが3行目に落ちた）。
+              1536px 以上は1行で並べる。
+              文字サイズは 14→16→18→16→20px。`min-w-0` はキャッチが伸びてメニューボタンを押し出さないため */}
           <Link href="/#hero" className="flex min-w-0 items-center gap-3" onClick={close}>
             <Logo className="h-12 w-auto lg:h-16" alt={`${site.name} トップへ`} />
             <span className="block text-sm leading-snug font-bold min-[410px]:text-base sm:text-lg lg:text-base xl:text-xl">
-              <span className="block 2xl:inline">{site.tagline}</span>
-              <span className="hidden 2xl:inline">　</span>
-              <span className="block 2xl:inline">{site.name}</span>
+              <span className="block sm:inline lg:max-2xl:block">
+                {site.name}｜学び抜く力をつける
+              </span>
+              <span>個別指導塾</span>
+              <span className="sm:hidden lg:inline">　</span>
+              <span className="sm:block lg:inline">{site.area}</span>
             </span>
           </Link>
 
