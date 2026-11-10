@@ -1,6 +1,7 @@
 import { updateMedia } from "@/content/media";
 import { socialLinks } from "@/content/site";
 import { floatStyle } from "@/lib/reveal";
+import { LinkButton } from "@/components/ui/button";
 import { Photo } from "@/components/ui/photo";
 import { Wrap } from "@/components/ui/wrap";
 
@@ -19,6 +20,10 @@ export function Updates() {
               <span className="lg:block">最近の</span>
               <span className="lg:block">まなサポ</span>
             </h2>
+            {/* ブログ（管理画面の記事）の一覧へ。見出しの真下に置き、スマホでも写真より先に見える位置にする */}
+            <LinkButton href="/blog" variant="ghost" size="sm" className="mt-4 lg:mt-6">
+              記事一覧を見る<span aria-hidden="true" className="ml-1">→</span>
+            </LinkButton>
           </div>
 
           <ul className="grid gap-6 sm:grid-cols-3">
