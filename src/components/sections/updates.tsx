@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { updateMedia } from "@/content/media";
+import { getArticles, type Article } from "@/lib/cms";
 import { socialLinks } from "@/content/site";
 import { floatStyle } from "@/lib/reveal";
 import { LinkButton } from "@/components/ui/button";
@@ -7,7 +9,18 @@ import { Wrap } from "@/components/ui/wrap";
 
 const instagram = socialLinks[0];
 
-export function Updates() {
+/** TOP に並べる新着記事の数 */
+const LATEST_COUNT = 3;
+
+/**
+ * 「最近のまなサポ」。ブログ（管理画面の記事）の新着を3件並べる（2026-11 のご依頼）。
+ * 新着が届くまでは支給写真3枚（updateMedia）のまま（2026-11 のご指示）。記事が1〜2件のあいだは、
+ * 足りない枠を写真で埋める。管理画面から取れないときも写真3枚になる。
+ * 記事は60秒ごとに取り直すので、管理画面で公開してから TOP に出るまで最大1分ほどかかる。
+ */
+export async function Updates() {
+  const articles = (await getArticles({ revalidate: 60 })).slice(0, LATEST_COUNT);
+
   return (
     <section id="updates" className="bg-white py-8 lg:py-14">
       <Wrap>
@@ -26,8 +39,14 @@ export function Updates() {
             </LinkButton>
           </div>
 
+          {/* 新着記事を左から並べ、3件に足りない分は支給写真で埋める（記事0件なら写真3枚のまま） */}
           <ul className="grid gap-6 sm:grid-cols-3">
-            {updateMedia.map((item) => (
+            {articles.map((article) => (
+              <li key={article.key}>
+                <ArticleCard article={article} />
+              </li>
+            ))}
+            {updateMedia.slice(0, LATEST_COUNT - articles.length).map((item) => (
               <li key={item.label}>
                 <Photo
                   media={item}
@@ -57,6 +76,43 @@ export function Updates() {
 
       </Wrap>
     </section>
+  );
+}
+
+/** 新着記事1件。写真の並びと同じ大きさ（3:2・角丸）にそろえ、下に日付とタイトルを出す */
+function ArticleCard({ article }: { article: Article }) {
+  return (
+    <Link href={`/blog/${article.key}`} className="group block">
+      <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-mint">
+        {article.thumbnail ? (
+          // 画像は管理画面の配信元から直接読む（配信元が決まっていないため next/image を使わない）
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={article.thumbnail}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          // サムネイルが無い記事はロゴを薄く置く（ブログ一覧と同じ）
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/images/logo.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 m-auto w-[36%] opacity-40 mix-blend-multiply"
+          />
+        )}
+      </div>
+      {article.date && (
+        <time dateTime={article.publishedAt ?? undefined} className="mt-2 block text-xs font-bold text-ink-soft">
+          {article.date}
+        </time>
+      )}
+      <p className="mt-1 line-clamp-2 text-sm leading-[1.6] font-bold group-hover:underline">
+        {article.title}
+      </p>
+    </Link>
   );
 }
 

@@ -172,12 +172,16 @@ export function formatContent(content: string): string {
   return formatted;
 }
 
-async function fetchContents(types: string): Promise<CmsContent[]> {
+/**
+ * @param revalidate 取得結果を何秒ためておくか。省略時はためない（毎回取りにいく）。
+ *   ブログのページは省略（管理画面で公開・下書きに戻す・編集した内容が、次に開いたときすぐ反映される。
+ *   ためると、期限切れ後も最初の1回は古い内容が出るため、下書きに戻した記事が残って見えた）。
+ *   TOP は 60 秒ためる（毎回取りにいくと、API の応答 約0.7秒ぶんトップの表示が遅れるため）。
+ */
+async function fetchContents(types: string, revalidate?: number): Promise<CmsContent[]> {
   try {
     const res = await fetch(`${CMS_ENDPOINT}?types=${types}`, {
-      // キャッシュしない。管理画面で公開・下書きに戻す・編集した内容が、次に開いたときすぐ反映される
-      // （キャッシュすると、期限切れ後も最初の1回は古い内容が出るため、下書きに戻した記事が残って見えた）
-      cache: "no-store",
+      ...(revalidate ? { next: { revalidate } } : { cache: "no-store" as const }),
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (!res.ok) return [];
@@ -218,9 +222,9 @@ function toArticle(item: CmsContent, usedKeys: Set<string>): Article {
   };
 }
 
-/** 公開済みの記事を新しい順で返す */
-export async function getArticles(): Promise<Article[]> {
-  const contents = await fetchContents("article");
+/** 公開済みの記事を新しい順で返す。`revalidate` は fetchContents を参照 */
+export async function getArticles({ revalidate }: { revalidate?: number } = {}): Promise<Article[]> {
+  const contents = await fetchContents("article", revalidate);
   const now = Date.now();
   const usedKeys = new Set<string>();
 
